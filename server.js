@@ -6,6 +6,11 @@
 require('dotenv').config();
 const app = require('./src/app');
 
+// Force API routes to work on Vercel
+if (process.env.VERCEL) {
+  console.log('Running on Vercel - API routes enabled');
+}
+
 const PORT = process.env.PORT || 3000;
 
 // Start server
