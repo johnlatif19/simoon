@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title id="pageTitle">تفاصيل الرحلة - رحلة في مصر</title>
+    
+    <!-- Dynamic Meta Tags (will be updated by JS) -->
+    <meta name="description" id="metaDescription" content="استكشف تفاصيل الرحلة واحجز مغامرتك مع رحلة في مصر">
+    <meta name="keywords" content="رحلة سياحية مصر, تفاصيل الرحلة, حجز جولة">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" id="ogTitle" content="تفاصيل الرحلة - رحلة في مصر">
+    <meta property="og:description" id="ogDescription" content="استكشف تفاصيل الرحلة">
+    <meta property="og:image" id="ogImage" content="https://i.postimg.cc/d0Pfc81d/Logo.jpg">
+    <meta property="og:url" id="ogUrl" content="">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical -->
+    <link rel="canonical" id="canonicalLink" href="/tour-details.html">
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/d0Pfc81d/Logo.jpg">
+    
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    
+    <style>
+        /* Tour Details Specific Styles */
+        .tour-hero {
+            position: relative;
+            min-height: 500px;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: flex-end;
+            margin-top: 80px;
+        }
+        
+        .tour-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+        }
+        
+        .tour-hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 0;
+            color: white;
+            width: 100%;
+        }
+        
+        .tour-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .tour-hero .tour-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .tour-hero .tour-meta span {
+            background: rgba(0,0,0,0.5);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .tour-hero .tour-meta i {
+            color: #D4AF37;
+            margin-left: 0.5rem;
+        }
+        
+        .tour-content {
+            padding: 3rem 0;
+        }
+        
+        .tour-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .tour-main-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .tour-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        
+        .booking-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+        
+        .booking-card h3 {
+            color: var(--gold-primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .price-display-large {
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, #D4AF37, #FF8C00);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .price-egyptian-large {
+            font-size: 1rem;
+            color: #2c1810;
+        }
+        
+        .price-foreign-large {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2c1810;
+        }
+        
+        .section-box {
+            margin-bottom: 2rem;
+        }
+        
+        .section-box h3 {
+            color: var(--gold-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gold-primary);
+            display: inline-block;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .info-list li i {
+            color: #D4AF37;
+            width: 24px;
+        }
+        
+        .itinerary-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .itinerary-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .itinerary-list li .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--gold-primary);
+            color: #2c1810;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .included-items {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+        
+        .excluded-items {
+            background: rgba(244, 67, 54, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+        }
+        
+        .gallery-grid-detail {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .gallery-grid-detail img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-grid-detail img:hover {
+            transform: scale(1.05);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--gold-primary);
+            text-decoration: none;
+        }
+        
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+        }
+        
+        .error-container {
+            text-align: center;
+            padding: 4rem;
+        }
+        
+        .error-container i {
+            font-size: 4rem;
+            color: #dc2626;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 992px) {
+            .tour-grid {
+                grid-template-columns: 1fr;
+            }
+            .tour-sidebar {
+                position: static;
+            }
+            .tour-hero h1 {
+                font-size: 2rem;
+            }
+            .tour-hero {
+                margin-top: 70px;
+                min-height: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .tour-main-content {
+                padding: 1rem;
+            }
+            .tour-hero .tour-meta {
+                gap: 0.5rem;
+            }
+            .tour-hero .tour-meta span {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://i.postimg.cc/d0Pfc81d/Logo.jpg" alt="رحلة في مصر" class="logo-img">
+                <span class="logo-text" data-i18n="logo">رحلة في مصر</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/#home" data-i18n="nav_home">الرئيسية</a></li>
+                <li><a href="/#about" data-i18n="nav_about">نبذة عنا</a></li>
+                <li><a href="/#tours" data-i18n="nav_tours">الجولات</a></li>
+                <li><a href="/#gallery" data-i18n="nav_gallery">المعرض</a></li>
+                <li><a href="/rate.html" data-i18n="nav_ratings">التقييمات</a></li>
+                <li><a href="/#contact" data-i18n="nav_contact">اتصل بنا</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="icon-btn" id="darkModeBtn"><i class="fas fa-moon"></i></button>
+                <button class="lang-btn" id="langBtn">EN</button>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="tourDetailsContainer">
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p style="margin-top: 1rem;">جاري تحميل تفاصيل الرحلة...</p>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="confirm_booking">تأكيد الحجز</h3>
+                <span class="modal-close" onclick="closeBookingModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="booking-tour-info" style="background: rgba(212,175,55,0.1); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                    <p><strong>الرحلة:</strong> <span id="modalTourName"></span></p>
+                </div>
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <input type="text" id="bookingName" class="form-input" placeholder="الاسم الكامل" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="bookingEmail" class="form-input" placeholder="البريد الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="bookingPhone" class="form-input" placeholder="رقم الهاتف" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="bookingNationality" class="form-select" required>
+                            <option value="">اختر الجنسية</option>
+                            <option value="egyptian">🇪🇬 مصري / عربي</option>
+                            <option value="foreign">🌍 أجنبي</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="bookingPersons" class="form-input" min="1" value="1" placeholder="عدد الأفراد" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="bookingDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="bookingMessage" class="form-textarea" rows="3" placeholder="ملاحظات إضافية (اختياري)"></textarea>
+                    </div>
+                    <div id="calculatedPrice" class="price-display" style="margin: 1rem 0; padding: 1rem; background: rgba(212,175,55,0.1); border-radius: 12px;"></div>
+                    <button type="submit" class="btn btn-primary w-100" data-i18n="confirm_btn">تأكيد الحجز</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="lightboxModal" class="modal">
+        <div class="modal-content" style="max-width: 90%; max-height: 90%; background: transparent; box-shadow: none;">
+            <span class="modal-close" style="position: absolute; top: -40px; right: 0; color: white; font-size: 2rem;" onclick="closeLightbox()">&times;</span>
+            <img id="lightboxImage" src="" style="width: 100%; height: auto; border-radius: 12px;">
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/booking.js"></script>
+    
+    <script>
+        // State
+        let currentTour = null;
+        let currentLanguage = localStorage.getItem('language') || 'ar';
+        let currentTourId = null;
+        
+        // Get tour ID from URL
+        function getTourIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id') || urlParams.get('tourId');
+        }
+        
+        // Load tour details
+        async function loadTourDetails() {
+            const tourId = getTourIdFromUrl();
+            
+            if (!tourId) {
+                showError('لم يتم تحديد الرحلة');
+                return;
+            }
+            
+            currentTourId = tourId;
+            
+            try {
+                const response = await fetch(`/api/v1/tours/${tourId}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        showError('الرحلة غير موجودة');
+                    } else {
+                        showError('حدث خطأ في تحميل البيانات');
+                    }
+                    return;
+                }
+                
+                currentTour = await response.json();
+                updatePageMetadata();
+                renderTourDetails();
+                
+            } catch (error) {
+                console.error('Error loading tour:', error);
+                showError('حدث خطأ في الاتصال بالخادم');
+            }
+        }
+        
+        // Update dynamic meta tags for SEO
+        function updatePageMetadata() {
+            if (!currentTour) return;
+            
+            const tourName = currentLanguage === 'ar' ? currentTour.nameAr : currentTour.nameEn;
+            const tourDescription = currentLanguage === 'ar' ? 
+                (currentTour.descriptionAr || currentTour.shortDescriptionAr || 'اكتشف جمال مصر مع رحلة سياحية مميزة') :
+                (currentTour.descriptionEn || currentTour.shortDescriptionEn || 'Discover the beauty of Egypt with a unique tour');
+            const tourImage = currentTour.mainImage || 'https://i.postimg.cc/d0Pfc81d/Logo.jpg';
+            const tourUrl = window.location.href;
+            
+            // Update title
+            document.title = `${tourName} | رحلة في مصر`;
+            document.getElementById('pageTitle').textContent = document.title;
+            
+            // Update meta description
+            const metaDesc = document.getElementById('metaDescription');
+            if (metaDesc) metaDesc.setAttribute('content', tourDescription.substring(0, 160));
+            
+            // Update Open Graph
+            const ogTitle = document.getElementById('ogTitle');
+            if (ogTitle) ogTitle.setAttribute('content', tourName);
+            
+            const ogDesc = document.getElementById('ogDescription');
+            if (ogDesc) ogDesc.setAttribute('content', tourDescription.substring(0, 200));
+            
+            const ogImg = document.getElementById('ogImage');
+            if (ogImg) ogImg.setAttribute('content', tourImage);
+            
+            const ogUrl = document.getElementById('ogUrl');
+            if (ogUrl) ogUrl.setAttribute('content', tourUrl);
+            
+            // Update canonical
+            const canonical = document.getElementById('canonicalLink');
+            if (canonical) canonical.setAttribute('href', tourUrl);
+        }
+        
+        // Render tour details
+        function renderTourDetails() {
+            if (!currentTour) return;
+            
+            const container = document.getElementById('tourDetailsContainer');
+            const isArabic = currentLanguage === 'ar';
+            
+            const tourName = isArabic ? currentTour.nameAr : currentTour.nameEn;
+            const tourDescription = isArabic ? currentTour.descriptionAr : currentTour.descriptionEn;
+            const shortDescription = isArabic ? currentTour.shortDescriptionAr : currentTour.shortDescriptionEn;
+            const itinerary = isArabic ? currentTour.itineraryAr : currentTour.itineraryEn;
+            const included = isArabic ? currentTour.includedAr : currentTour.includedEn;
+            const excluded = isArabic ? currentTour.excludedAr : currentTour.excludedEn;
+            
+            // Calculate average rating
+            const avgRating = currentTour.rating || 0;
+            const totalRatings = currentTour.totalRatings || 0;
+            
+            container.innerHTML = `
+                <!-- Hero Section -->
+                <div class="tour-hero" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('${currentTour.mainImage || 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}')">
+                    <div class="container">
+                        <div class="tour-hero-content">
+                            <a href="/#tours" class="back-button">
+                                <i class="fas fa-arrow-right"></i> عودة إلى الرحلات
+                            </a>
+                            <h1>${escapeHtml(tourName)}</h1>
+                            <div class="tour-meta">
+                                <span><i class="fas fa-clock"></i> ${currentTour.duration || '4 ساعات'}</span>
+                                <span><i class="fas fa-users"></i> ${currentTour.maxPersons || 20} شخص كحد أقصى</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${currentTour.startLocation || 'القاهرة'}</span>
+                                <span><i class="fas fa-star" style="color: #D4AF37;"></i> ${avgRating} (${totalRatings} تقييم)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="container">
+                    <div class="tour-content">
+                        <div class="tour-grid">
+                            <!-- Main Content -->
+                            <div class="tour-main-content">
+                                <!-- Short Description -->
+                                ${shortDescription ? `
+                                    <div class="section-box">
+                                        <h3><i class="fas fa-info-circle"></i> نظرة عامة</h3>
+                                        <p>${escapeHtml(shortDescription)}</p>
+                                    </div>
+                                ` : ''}
+                                
+                                <!-- Full Description -->
+                                ${tourDescription ? `
+                                    <div class="section-box">
+                                        <h3><i class="fas fa-align-right"></i> وصف الرحلة</h3>
+                                        <div style="line-height: 1.8;">${escapeHtml(tourDescription).replace(/\n/g, '<br>')}</div>
+                                    </div>
+                                ` : ''}
+                                
+                                <!-- Itinerary -->
+                                ${itinerary && itinerary.length > 0 ? `
+                                    <div class="section-box">
+                                        <h3><i class="fas fa-list-ol"></i> برنامج الرحلة</h3>
+                                        <ul class="itinerary-list">
+                                            ${itinerary.map((item, index) => `
+                                                <li>
+                                                    <span class="step-number">${index + 1}</span>
+                                                    <span>${escapeHtml(item)}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                ` : ''}
+                                
+                                <!-- Included & Excluded -->
+                                <div class="section-box">
+                                    <h3><i class="fas fa-clipboard-list"></i> يشمل ولا يشمل</h3>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                        ${included && included.length > 0 ? `
+                                            <div class="included-items">
+                                                <h4 style="color: #4caf50; margin-bottom: 0.5rem;"><i class="fas fa-check-circle"></i> يشمل</h4>
+                                                <ul class="info-list">
+                                                    ${included.map(item => `<li><i class="fas fa-check" style="color: #4caf50;"></i> ${escapeHtml(item)}</li>`).join('')}
+                                                </ul>
+                                            </div>
+                                        ` : ''}
+                                        ${excluded && excluded.length > 0 ? `
+                                            <div class="excluded-items">
+                                                <h4 style="color: #dc2626; margin-bottom: 0.5rem;"><i class="fas fa-times-circle"></i> لا يشمل</h4>
+                                                <ul class="info-list">
+                                                    ${excluded.map(item => `<li><i class="fas fa-times" style="color: #dc2626;"></i> ${escapeHtml(item)}</li>`).join('')}
+                                                </ul>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                                
+                                <!-- Gallery -->
+                                ${currentTour.galleryImages && currentTour.galleryImages.length > 0 ? `
+                                    <div class="section-box">
+                                        <h3><i class="fas fa-images"></i> معرض الصور</h3>
+                                        <div class="gallery-grid-detail">
+                                            ${currentTour.galleryImages.map(img => `
+                                                <img src="${img}" alt="${escapeHtml(tourName)}" loading="lazy" onclick="openLightbox('${img}')">
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            
+                            <!-- Sidebar - Booking Card -->
+                            <div class="tour-sidebar">
+                                <div class="booking-card">
+                                    <h3><i class="fas fa-calendar-check"></i> احجز الآن</h3>
+                                    <div class="price-display-large">
+                                        <div class="price-egyptian-large">
+                                            <i class="fas fa-egyptian-pound"></i> ${currentTour.priceEgyptian.toLocaleString()} جنيه
+                                        </div>
+                                        <div class="price-foreign-large">
+                                            $${currentTour.priceForeign} USD
+                                        </div>
+                                        <small style="color: #2c1810;">للشخص الواحد</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>عدد الأفراد</label>
+                                        <input type="number" id="detailPersons" class="form-input" min="1" value="1" onchange="updateDetailPrice()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>الجنسية</label>
+                                        <select id="detailNationality" class="form-select" onchange="updateDetailPrice()">
+                                            <option value="egyptian">🇪🇬 مصري / عربي</option>
+                                            <option value="foreign">🌍 أجنبي</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>تاريخ الرحلة</label>
+                                        <input type="date" id="detailDate" class="form-input">
+                                    </div>
+                                    
+                                    <div id="detailTotalPrice" style="text-align: center; margin: 1rem 0; padding: 1rem; background: rgba(212,175,55,0.2); border-radius: 12px;">
+                                        <strong style="font-size: 1.3rem;">0 ج.م</strong>
+                                    </div>
+                                    
+                                    <button onclick="openBookingModalFromDetail()" class="btn btn-primary w-100">
+                                        <i class="fas fa-calendar-check"></i> احجز الآن
+                                    </button>
+                                    
+                                    <hr style="margin: 1.5rem 0; border-color: var(--border-color);">
+                                    
+                                    <div class="info-list" style="font-size: 0.9rem;">
+                                        <li><i class="fas fa-phone"></i> للاستفسار: 01229971386</li>
+                                        <li><i class="fab fa-whatsapp"></i> واتساب: 01229971386</li>
+                                        <li><i class="fas fa-envelope"></i> info@journeyinegypt.com</li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Set min date for date picker
+            const dateInput = document.getElementById('detailDate');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
+            }
+            
+            // Update initial price
+            updateDetailPrice();
+        }
+        
+        // Update price in sidebar
+        function updateDetailPrice() {
+            if (!currentTour) return;
+            
+            const nationality = document.getElementById('detailNationality')?.value;
+            const persons = parseInt(document.getElementById('detailPersons')?.value) || 1;
+            
+            let pricePerPerson, currency, symbol;
+            if (nationality === 'egyptian') {
+                pricePerPerson = currentTour.priceEgyptian;
+                currency = 'EGP';
+                symbol = 'جنيه';
+            } else {
+                pricePerPerson = currentTour.priceForeign;
+                currency = 'USD';
+                symbol = '$';
+            }
+            
+            const total = pricePerPerson * persons;
+            const priceDisplay = document.getElementById('detailTotalPrice');
+            if (priceDisplay) {
+                priceDisplay.innerHTML = `<strong style="font-size: 1.3rem;">${total.toLocaleString()} ${symbol}</strong><br><small>الإجمالي لـ ${persons} أشخاص</small>`;
+            }
+        }
+        
+        // Open booking modal with pre-filled data
+        function openBookingModalFromDetail() {
+            if (!currentTour) return;
+            
+            const nationality = document.getElementById('detailNationality')?.value;
+            const persons = parseInt(document.getElementById('detailPersons')?.value) || 1;
+            const date = document.getElementById('detailDate')?.value;
+            
+            // Set modal tour name
+            const tourNameEl = document.getElementById('modalTourName');
+            if (tourNameEl) {
+                tourNameEl.textContent = currentLanguage === 'ar' ? currentTour.nameAr : currentTour.nameEn;
+            }
+            
+            // Pre-fill form if possible
+            const personsInput = document.getElementById('bookingPersons');
+            if (personsInput) personsInput.value = persons;
+            
+            const nationalitySelect = document.getElementById('bookingNationality');
+            if (nationalitySelect) nationalitySelect.value = nationality;
+            
+            const dateInput = document.getElementById('bookingDate');
+            if (dateInput && date) dateInput.value = date;
+            
+            // Open modal
+            openBookingModal(currentTour.id);
+            
+            // Trigger price calculation
+            setTimeout(() => {
+                if (typeof calculatePrice === 'function') {
+                    calculatePrice();
+                }
+            }, 100);
+        }
+        
+        // Open lightbox for gallery images
+        function openLightbox(imageUrl) {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImage');
+            if (modal && img) {
+                img.src = imageUrl;
+                modal.classList.add('active');
+            }
+        }
+        
+        function closeLightbox() {
+            const modal = document.getElementById('lightboxModal');
+            if (modal) modal.classList.remove('active');
+        }
+        
+        // Show error message
+        function showError(message) {
+            const container = document.getElementById('tourDetailsContainer');
+            container.innerHTML = `
+                <div class="container">
+                    <div class="error-container">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h2>عذراً!</h2>
+                        <p>${escapeHtml(message)}</p>
+                        <a href="/#tours" class="btn btn-primary" style="margin-top: 2rem;">
+                            <i class="fas fa-arrow-right"></i> العودة إلى الرحلات
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Escape HTML
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+        
+        // Dark Mode
+        function initDarkMode() {
+            const darkModeBtn = document.getElementById('darkModeBtn');
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                darkModeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            darkModeBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkNow = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkNow);
+                darkModeBtn.innerHTML = isDarkNow ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            });
+        }
+        
+        // Language System
+        const translations = {
+            ar: {
+                logo: "رحلة في مصر",
+                nav_home: "الرئيسية",
+                nav_about: "نبذة عنا",
+                nav_tours: "الجولات",
+                nav_gallery: "المعرض",
+                nav_ratings: "التقييمات",
+                nav_contact: "اتصل بنا",
+                confirm_booking: "تأكيد الحجز",
+                confirm_btn: "تأكيد الحجز"
+            },
+            en: {
+                logo: "Journey in Egypt",
+                nav_home: "Home",
+                nav_about: "About",
+                nav_tours: "Tours",
+                nav_gallery: "Gallery",
+                nav_ratings: "Ratings",
+                nav_contact: "Contact",
+                confirm_booking: "Confirm Booking",
+                confirm_btn: "Confirm Booking"
+            }
+        };
+        
+        function updateLanguage() {
+            currentLanguage = localStorage.getItem('language') || 'ar';
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLanguage][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[currentLanguage][key];
+                    } else {
+                        el.textContent = translations[currentLanguage][key];
+                    }
+                }
+            });
+            
+            const langBtn = document.getElementById('langBtn');
+            if (langBtn) {
+                langBtn.textContent = currentLanguage === 'ar' ? 'EN' : 'AR';
+            }
+            
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            
+            // Re-render tour details if loaded
+            if (currentTour) {
+                renderTourDetails();
+                updatePageMetadata();
+            }
+        }
+        
+        function initLanguage() {
+            const langBtn = document.getElementById('langBtn');
+            if (langBtn) {
+                langBtn.addEventListener('click', () => {
+                    const newLang = currentLanguage === 'ar' ? 'en' : 'ar';
+                    localStorage.setItem('language', newLang);
+                    updateLanguage();
+                });
+            }
+            updateLanguage();
+        }
+        
+        // Mobile menu
+        function initMobileMenu() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+                document.querySelectorAll('.nav-menu a').forEach(link => {
+                    link.addEventListener('click', () => navMenu.classList.remove('active'));
+                });
+            }
+        }
+        
+        // Navbar scroll effect
+        function initNavbarScroll() {
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            initLanguage();
+            initMobileMenu();
+            initNavbarScroll();
+            loadTourDetails();
+        });
+        
+        // Expose functions
+        window.openBookingModalFromDetail = openBookingModalFromDetail;
+        window.updateDetailPrice = updateDetailPrice;
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
+    </script>
+</body>
+</html>

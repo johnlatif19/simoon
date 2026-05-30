@@ -1,0 +1,157 @@
+{
+  "version": 2,
+  "name": "journey-in-egypt",
+  "alias": ["simoon-issac.vercel.app"],
+  
+  "functions": {
+    "server.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  
+  "routes": [
+    {
+      "src": "/sitemap.xml",
+      "dest": "/public/sitemap.xml",
+      "headers": {
+        "Content-Type": "application/xml",
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/public/robots.txt",
+      "headers": {
+        "Content-Type": "text/plain",
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/login",
+      "dest": "/public/login.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/public/dashboard.html"
+    },
+    {
+      "src": "/tour-details",
+      "dest": "/public/tour-details.html"
+    },
+    {
+      "src": "/pay",
+      "dest": "/public/pay.html"
+    },
+    {
+      "src": "/rate",
+      "dest": "/public/rate.html"
+    },
+    {
+      "src": "/(.*)\\.(html|css|js|jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|eot)",
+      "dest": "/public/$1.$2",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/public/assets/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.html"
+    }
+  ],
+  
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://simoon-issac.vercel.app"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
+  ],
+  
+  "rewrites": [
+    {
+      "source": "/tour/:id",
+      "destination": "/tour-details.html?id=:id"
+    },
+    {
+      "source": "/tour/:slug",
+      "destination": "/tour-details.html?slug=:slug"
+    }
+  ],
+  
+  "redirects": [
+    {
+      "source": "/old/(.*)",
+      "destination": "/$1",
+      "permanent": true
+    },
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin",
+      "destination": "/dashboard",
+      "permanent": true
+    }
+  ],
+  
+  "env": {
+    "NODE_VERSION": "18.x",
+    "NODE_ENV": "production"
+  },
+  
+  "github": {
+    "enabled": true,
+    "autoAlias": true
+  }
+}

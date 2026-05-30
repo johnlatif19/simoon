@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>تسجيل الدخول - لوحة التحكم | رحلة في مصر</title>
+    
+    <!-- SEO -->
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    
+    <style>
+        /* Login Page Specific Styles */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #D4AF37, #B8860B);
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --text-primary: #2c1810;
+            --text-secondary: #5c3a2a;
+            --shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+        
+        body.dark-mode {
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --card-bg: rgba(30, 30, 50, 0.98);
+            --text-primary: #f0e6d2;
+            --text-secondary: #d4a373;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transition: background 0.3s ease;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .login-card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 3px solid #D4AF37;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            object-fit: cover;
+        }
+        
+        .login-header h2 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #D4AF37, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #D4AF37;
+            font-size: 1.1rem;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+        
+        .input-group input.error {
+            border-color: #dc2626;
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, #D4AF37, #FF8C00);
+            color: #2c1810;
+            border: none;
+            padding: 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: #fff;
+            padding: 0.8rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #4caf50, #388e3c);
+            color: #fff;
+            padding: 0.8rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .dark-mode-toggle:hover {
+            background: #D4AF37;
+            transform: scale(1.05);
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .login-footer a {
+            color: #D4AF37;
+            text-decoration: none;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Password visibility toggle */
+        .password-toggle {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+        
+        .password-toggle:hover {
+            color: #D4AF37;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(44, 24, 16, 0.3);
+            border-top-color: #2c1810;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 500px) {
+            body {
+                padding: 1rem;
+            }
+            .login-card {
+                padding: 1.8rem;
+            }
+            .login-header h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="https://i.postimg.cc/d0Pfc81d/Logo.jpg" alt="رحلة في مصر" class="login-logo">
+                <h2>✨ لوحة التحكم ✨</h2>
+                <p>الرجاء إدخال بيانات الاعتماد الخاصة بك</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>👤 اسم المستخدم</label>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>🔒 كلمة المرور</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
+                        <span class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye-slash" id="toggleIcon"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>تسجيل الدخول</span>
+                </button>
+                
+                <div id="loginError" class="error-message"></div>
+                <div id="loginSuccess" class="success-message"></div>
+            </form>
+            
+            <div class="login-footer">
+                <p>🔐 منطقة آمنة للمسؤولين فقط</p>
+                <p><a href="/">← العودة إلى الموقع الرئيسي</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ---------- Dark Mode ----------
+        function initDarkMode() {
+            const btn = document.getElementById('darkModeToggle');
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                btn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            btn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkNow = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkNow);
+                btn.innerHTML = isDarkNow ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            });
+        }
+        
+        // ---------- Password Toggle ----------
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+        }
+        
+        // ---------- API Configuration ----------
+        const API_BASE_URL = window.location.origin;
+        
+        // ---------- Check if already logged in ----------
+        async function checkAuth() {
+            const token = localStorage.getItem('adminToken');
+            if (token) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/v1/auth/verify`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        // Already logged in, redirect to dashboard
+                        window.location.href = '/dashboard.html';
+                    } else {
+                        // Token invalid, remove it
+                        localStorage.removeItem('adminToken');
+                    }
+                } catch (error) {
+                    console.error('Auth check error:', error);
+                    localStorage.removeItem('adminToken');
+                }
+            }
+        }
+        
+        // ---------- Show Error Message ----------
+        function showError(message) {
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Add shake animation to form
+            const form = document.getElementById('loginForm');
+            form.style.animation = 'shake 0.5s ease';
+            setTimeout(() => {
+                form.style.animation = '';
+            }, 500);
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // ---------- Show Success Message ----------
+        function showSuccess(message) {
+            const successDiv = document.getElementById('loginSuccess');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+        
+        // ---------- Remove Error Styling ----------
+        function removeErrorStyling() {
+            const inputs = document.querySelectorAll('.input-group input');
+            inputs.forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+        
+        // ---------- Add Error Styling ----------
+        function addErrorStyling(fieldId) {
+            const input = document.getElementById(fieldId);
+            if (input) {
+                input.classList.add('error');
+            }
+        }
+        
+        // ---------- Validate Form ----------
+        function validateForm(username, password) {
+            removeErrorStyling();
+            
+            if (!username || username.trim() === '') {
+                showError('❌ الرجاء إدخال اسم المستخدم');
+                addErrorStyling('username');
+                return false;
+            }
+            
+            if (!password || password.trim() === '') {
+                showError('❌ الرجاء إدخال كلمة المرور');
+                addErrorStyling('password');
+                return false;
+            }
+            
+            if (password.length < 4) {
+                showError('❌ كلمة المرور يجب أن تكون 4 أحرف على الأقل');
+                addErrorStyling('password');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // ---------- Login Function ----------
+        async function login(username, password) {
+            const loginBtn = document.getElementById('loginBtn');
+            const originalContent = loginBtn.innerHTML;
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<div class="spinner"></div> جاري التحقق...';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        username: username.trim(), 
+                        password: password.trim() 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Store token
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('adminUsername', username);
+                    
+                    // Show success message
+                    showSuccess('✅ تم تسجيل الدخول بنجاح! جاري التحويل...');
+                    
+                    // Redirect to dashboard after short delay
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 1000);
+                } else {
+                    // Show error
+                    const errorMsg = data.message || data.error || '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+                    showError(errorMsg);
+                    
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                    document.getElementById('password').focus();
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('❌ حدث خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.');
+            } finally {
+                // Reset button
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = originalContent;
+            }
+        }
+        
+        // ---------- Handle Form Submit ----------
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (validateForm(username, password)) {
+                    await login(username, password);
+                }
+            });
+        }
+        
+        // ---------- Handle Enter Key ----------
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (username && password) {
+                    e.preventDefault();
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            }
+        });
+        
+        // ---------- Demo Credentials Hint (for development only) ----------
+        function showDemoHint() {
+            // This is just for development - remove in production
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.log('🔐 Demo credentials: admin / admin123');
+            }
+        }
+        
+        // ---------- Clear Form on Load ----------
+        function clearForm() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            removeErrorStyling();
+        }
+        
+        // ---------- Initialize ----------
+        initDarkMode();
+        checkAuth();
+        clearForm();
+        showDemoHint();
+        
+        // Export for console debugging
+        window.togglePassword = togglePassword;
+    </script>
+</body>
+</html>

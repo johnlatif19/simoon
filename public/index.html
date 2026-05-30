@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- SEO Meta Tags -->
+    <title>رحلة في مصر مع سيمون | اكتشف عظمة الفراعنة</title>
+    <meta name="description" content="استمتع بأفضل الرحلات السياحية في مصر. الأهرامات، الأقصر، الغردقة وشرم الشيخ. عروض حصرية، حجز آمن، دعم فوري." />
+    <meta name="keywords" content="رحلات سياحية مصر, حجز جولات سياحية, عروض السفر, Nile cruise, Cairo tours, Luxor excursions" />
+    <meta name="author" content="رحلة في مصر" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://simoon-issac.vercel.app/" />
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/d0Pfc81d/Logo.jpg">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/d0Pfc81d/Logo.jpg">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="رحلة في مصر | اكتشف سحر مصر مع سيمون" />
+    <meta property="og:description" content="رحلات سياحية فاخرة بأفضل الأسعار. احجز مغامرتك في مصر الآن!" />
+    <meta property="og:image" content="https://i.postimg.cc/d0Pfc81d/Logo.jpg" />
+    <meta property="og:url" content="https://simoon-issac.vercel.app/" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="رحلة في مصر | اكتشف سحر مصر" />
+    <meta name="twitter:description" content="أفضل العروض السياحية في مصر. حجز آمن، دعم فوري!" />
+    
+    <!-- Fonts & Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/components.css" />
+    
+    <style>
+        /* Additional navbar and hero styles specific to index */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--navbar-bg, rgba(44, 24, 16, 0.97));
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 0.8rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-color, rgba(212, 175, 55, 0.3));
+        }
+        
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #D4AF37;
+        }
+        
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #D4AF37, #FFD700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            color: var(--text-primary, #2c1810);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #D4AF37, #FFD700);
+            transition: width 0.3s;
+        }
+        
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+        
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .icon-btn {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary, #2c1810);
+            transition: all 0.3s;
+        }
+        
+        .icon-btn:hover {
+            background: #D4AF37;
+            color: #2c1810;
+            transform: scale(1.05);
+        }
+        
+        .lang-btn {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 25px;
+            padding: 0.3rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-primary, #2c1810);
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            background: #D4AF37;
+            color: #2c1810;
+        }
+        
+        .nav-toggle {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .nav-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #D4AF37;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 0;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: #fff;
+            z-index: 1;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            font-weight: 800;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #D4AF37, #FF8C00);
+            color: #2c1810;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #D4AF37, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .about-text p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary, #5c3a2a);
+        }
+        
+        .achievements {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .achievement {
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255,255,255,0.95));
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .achievement:hover {
+            transform: translateY(-5px);
+        }
+        
+        .achievement i {
+            font-size: 2rem;
+            color: #D4AF37;
+            margin-bottom: 0.5rem;
+        }
+        
+        .achievement span {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary, #5c3a2a);
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow, 0 20px 40px rgba(0,0,0,0.1));
+            transition: transform 0.3s;
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Tours Section */
+        .tours-section {
+            background: rgba(212, 175, 55, 0.05);
+            padding: 4rem 0;
+        }
+        
+        /* Portfolio Section */
+        .portfolio-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .portfolio-text ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .portfolio-text li {
+            padding: 0.5rem 0;
+            padding-right: 1.5rem;
+            position: relative;
+        }
+        
+        .portfolio-text li::before {
+            content: '★';
+            position: absolute;
+            right: 0;
+            color: #D4AF37;
+        }
+        
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .portfolio-gallery img {
+            width: 100%;
+            border-radius: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .portfolio-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow, 0 20px 40px rgba(0,0,0,0.1));
+        }
+        
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .contact-info, .contact-form-container {
+            background: var(--card-bg, rgba(255,255,255,0.95));
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow, 0 20px 40px rgba(0,0,0,0.1));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .contact-info h3, .contact-form-container h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .contact-info a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 1rem 0;
+            color: var(--text-primary, #2c1810);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .contact-info a:hover {
+            color: #D4AF37;
+        }
+        
+        .contact-info i {
+            width: 30px;
+            color: #D4AF37;
+            font-size: 1.2rem;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--card-bg, rgba(255,255,255,0.95));
+            border-radius: 20px;
+            margin: 2rem auto;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .testimonials-empty i {
+            font-size: 4rem;
+            color: #D4AF37;
+            margin-bottom: 1rem;
+        }
+        
+        .rate-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #D4AF37, #FF8C00);
+            color: #2c1810;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .rate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow, 0 20px 40px rgba(0,0,0,0.1));
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--footer-bg, #1a0f0a);
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #25D366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .about-content,
+            .portfolio-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+            .nav-menu {
+                position: fixed;
+                right: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--navbar-bg, rgba(44,24,16,0.97));
+                backdrop-filter: blur(15px);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 2rem 0;
+                gap: 1.5rem;
+            }
+            .nav-menu.active {
+                right: 0;
+            }
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+            .tours-grid {
+                grid-template-columns: 1fr;
+            }
+            .achievements {
+                flex-direction: column;
+            }
+            .portfolio-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://i.postimg.cc/d0Pfc81d/Logo.jpg" alt="رحلة في مصر" class="logo-img">
+                <span class="logo-text" data-i18n="logo">رحلة في مصر</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" data-i18n="nav_home">الرئيسية</a></li>
+                <li><a href="#about" data-i18n="nav_about">نبذة عنا</a></li>
+                <li><a href="#tours" data-i18n="nav_tours">الجولات</a></li>
+                <li><a href="#gallery" data-i18n="nav_gallery">المعرض</a></li>
+                <li><a href="#testimonials" data-i18n="nav_testimonials">آراء العملاء</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">اتصل بنا</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="icon-btn" id="darkModeBtn"><i class="fas fa-moon"></i></button>
+                <button class="lang-btn" id="langBtn">EN</button>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="hero_title">اكتشف جمال مصر</h1>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">مع مرشدة سياحية وممثلة محترفة، رحلة لا تُنسى في قلب التاريخ والثقافة المصرية</p>
+            <button class="cta-button" onclick="scrollToSection('contact')" data-i18n="hero_btn">احجز رحلتك الآن</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="about_title">نبذة عنا</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3 data-i18n="about_welcome">مرحبا بكم في رحلة في مصر</h3>
+                    <p data-i18n="about_p1">أنا سيمون، مرشدة سياحية وممثلة مصرية محترفة. شغفي هو إظهار جمال مصر الحقيقي من خلال عيون فنانة.</p>
+                    <p data-i18n="about_p2">مع أكثر من 10 سنوات من الخبرة في مجال السياحة والفن، أضمن لك رحلة مميزة.</p>
+                    <div class="achievements">
+                        <div class="achievement">
+                            <i class="fas fa-smile"></i>
+                            <span data-i18n="achievement_1">1000+ عميل سعيد</span>
+                        </div>
+                        <div class="achievement">
+                            <i class="fas fa-film"></i>
+                            <span data-i18n="achievement_2">15+ عمل فني</span>
+                        </div>
+                        <div class="achievement">
+                            <i class="fas fa-flag-checkered"></i>
+                            <span data-i18n="achievement_3">50+ جولة سياحية</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://i.postimg.cc/vZ9PhczH/Simoon.jpg" alt="سيمون - مرشدة سياحية">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tours Section -->
+    <section id="tours" class="tours-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="tours_title">الجولات السياحية</h2>
+            <div id="toursGrid" class="tours-grid grid grid-cols-3">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="portfolio_title">ملف أعمال المرشدة السياحية</h2>
+            <div class="portfolio-content">
+                <div class="portfolio-text">
+                    <h3 data-i18n="portfolio_name">سيمون اسحاق - مرشدة سياحية وممثلة</h3>
+                    <h4 data-i18n="portfolio_awards">جوائز وتكريمات:</h4>
+                    <ul>
+                        <li data-i18n="portfolio_award1">تكريم من وزارة السياحة المصرية</li>
+                        <li data-i18n="portfolio_award2">جائزة أفضل مرشدة سياحية 2024</li>
+                        <li data-i18n="portfolio_award3">سفيرة السياحة المصرية</li>
+                    </ul>
+                </div>
+                <div class="portfolio-gallery">
+                    <img src="https://i.postimg.cc/YS1LV5nj/5.jpg" alt="عمل فني 1">
+                    <img src="https://i.postimg.cc/GtS4Gd2x/6.jpg" alt="عمل فني 2">
+                    <img src="https://i.postimg.cc/yYkgBgQ2/7.jpg" alt="عمل فني 3">
+                    <img src="https://i.postimg.cc/HsVcHcvm/8.jpg" alt="عمل فني 4">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="gallery_title">معرض الصور</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://i.postimg.cc/XJGm4g5k/1.jpg" alt="معرض 1" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.postimg.cc/Bb2z1QNY/2.jpg" alt="معرض 2" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.postimg.cc/jjWZ7SSk/3.jpg" alt="معرض 3" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.postimg.cc/FK2GgXfF/4.jpg" alt="معرض 4" loading="lazy"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="testimonials_title">آراء العملاء</h2>
+            <div id="testimonialsContainer">
+                <div class="testimonials-empty">
+                    <i class="fas fa-star-of-life"></i>
+                    <h3 data-i18n="no_reviews">لا توجد تقييمات بعد</h3>
+                    <p data-i18n="be_first">كن أول من يقيّم تجربته معنا!</p>
+                    <a href="/rate.html" class="rate-btn" data-i18n="add_review">أضف تقييمك الآن</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="contact_title">اتصل بنا</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 data-i18n="contact_info">معلومات الاتصال</h3>
+                    <a href="tel:01229971386"><i class="fas fa-phone"></i> 01229971386</a>
+                    <a href="mailto:info@journeyinegypt.com"><i class="fas fa-envelope"></i> info@journeyinegypt.com</a>
+                    <a href="https://wa.me/201229971386"><i class="fab fa-whatsapp"></i> <span data-i18n="whatsapp">واتساب</span></a>
+                    <a href="https://www.facebook.com/simoon.issac"><i class="fab fa-facebook"></i> <span data-i18n="facebook">فيسبوك</span></a>
+                    <a href="https://www.instagram.com/simoon.issac"><i class="fab fa-instagram"></i> <span data-i18n="instagram">انستجرام</span></a>
+                </div>
+                <div class="contact-form-container">
+                    <h3 data-i18n="send_message">أرسل رسالتك</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="contactName" class="form-input" placeholder="الاسم الكامل" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="contactEmail" class="form-input" placeholder="البريد الإلكتروني" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="contactPhone" class="form-input" placeholder="رقم الهاتف (اختياري)">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="contactSubject" class="form-input" placeholder="الموضوع">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="contactMessage" class="form-textarea" rows="5" placeholder="رسالتك" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" data-i18n="send_btn">إرسال الرسالة</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p data-i18n="copyright">&copy; 2026 رحلة في مصر مع سيمون. جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/201229971386" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="confirm_booking">تأكيد الحجز</h3>
+                <span class="modal-close" onclick="closeBookingModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="booking-tour-info" style="background: rgba(212,175,55,0.1); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                    <p><strong>الرحلة:</strong> <span id="modalTourName"></span></p>
+                </div>
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <input type="text" id="bookingName" class="form-input" placeholder="الاسم الكامل" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="bookingEmail" class="form-input" placeholder="البريد الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="bookingPhone" class="form-input" placeholder="رقم الهاتف" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="bookingNationality" class="form-select" required>
+                            <option value="">اختر الجنسية</option>
+                            <option value="egyptian">🇪🇬 مصري / عربي</option>
+                            <option value="foreign">🌍 أجنبي</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="bookingPersons" class="form-input" min="1" value="1" placeholder="عدد الأفراد" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="bookingDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="bookingMessage" class="form-textarea" rows="3" placeholder="ملاحظات إضافية (اختياري)"></textarea>
+                    </div>
+                    <div id="calculatedPrice" class="price-display" style="margin: 1rem 0; padding: 1rem; background: rgba(212,175,55,0.1); border-radius: 12px;"></div>
+                    <button type="submit" class="btn btn-primary w-100" data-i18n="confirm_btn">تأكيد الحجز</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/booking.js"></script>
+    <script src="/assets/js/main.js"></script>
+    
+    <script>
+        // Scroll to section function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Contact form submission
+        document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+            
+            const contactData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                phone: document.getElementById('contactPhone').value || '',
+                subject: document.getElementById('contactSubject').value || 'رسالة من الموقع',
+                message: document.getElementById('contactMessage').value,
+                status: 'unread'
+            };
+            
+            try {
+                const response = await fetch('/api/v1/contacts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contactData)
+                });
+                
+                if (response.ok) {
+                    utils.showToast('✅ تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.', 'success');
+                    e.target.reset();
+                } else {
+                    utils.showToast('❌ حدث خطأ في الإرسال', 'error');
+                }
+            } catch (error) {
+                console.error('Contact error:', error);
+                utils.showToast('❌ حدث خطأ في الاتصال', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+        
+        // Load recent ratings on homepage
+        async function loadRecentRatings() {
+            try {
+                const response = await fetch('/api/v1/ratings');
+                if (response.ok) {
+                    const ratings = await response.json();
+                    const container = document.getElementById('testimonialsContainer');
+                    if (container && ratings.length > 0) {
+                        const recentRatings = ratings.slice(0, 3);
+                        container.innerHTML = `
+                            <div class="rankings-grid grid grid-cols-3">
+                                ${recentRatings.map(rating => `
+                                    <div class="ranking-card" style="background: var(--card-bg); border-radius: 20px; padding: 1.5rem;">
+                                        <div class="ranking-header" style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                            <div>
+                                                <strong>${utils.escapeHtml(rating.name)}</strong>
+                                                <div class="country" style="font-size: 0.8rem; color: var(--text-secondary);">📍 ${utils.escapeHtml(rating.country)}</div>
+                                            </div>
+                                            <div class="rating-stars">${generateStarsMini(rating.rating)}</div>
+                                        </div>
+                                        <div class="ranking-message" style="margin: 1rem 0; padding: 1rem; background: rgba(212,175,55,0.05); border-radius: 12px;">
+                                            <i class="fas fa-quote-right" style="color: #D4AF37;"></i>
+                                            <p style="margin-top: 0.5rem;">${utils.escapeHtml(rating.message.substring(0, 150))}${rating.message.length > 150 ? '...' : ''}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div style="text-align: center; margin-top: 2rem;">
+                                <a href="/rate.html" class="rate-btn">عرض كل التقييمات</a>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (error) {
+                console.error('Load ratings error:', error);
+            }
+        }
+        
+        function generateStarsMini(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += i <= rating ? '<i class="fas fa-star" style="color: #D4AF37;"></i>' : '<i class="far fa-star" style="color: #D4AF37;"></i>';
+            }
+            return stars;
+        }
+        
+        // Load recent ratings
+        loadRecentRatings();
+        
+        // Active link highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

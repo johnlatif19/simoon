@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>لوحة التحكم - رحلة في مصر | إدارة متكاملة</title>
+    
+    <!-- SEO -->
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    
+    <style>
+        /* Additional Dashboard Styles */
+        :root {
+            --dashboard-sidebar-width: 280px;
+            --dashboard-header-height: 70px;
+        }
+        
+        /* Force styles for dashboard */
+        .dashboard-wrapper {
+            display: flex;
+            min-height: 100vh;
+            background: var(--gradient-bg-light);
+        }
+        
+        .dashboard-main {
+            flex: 1;
+            margin-right: var(--dashboard-sidebar-width);
+            padding: var(--spacing-xl);
+            transition: margin var(--transition-normal);
+        }
+        
+        @media (max-width: 992px) {
+            .dashboard-main {
+                margin-right: 0;
+            }
+        }
+        
+        /* Tour image in table */
+        .tour-image-thumb {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+        }
+        
+        /* Form array items */
+        .array-items-container {
+            background: var(--gray-100);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .array-item {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            align-items: center;
+        }
+        
+        .array-item input {
+            flex: 1;
+        }
+        
+        .array-item .remove-item-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .array-item .remove-item-btn:hover {
+            background: #b91c1c;
+        }
+        
+        .add-item-btn {
+            background: var(--gold-primary);
+            color: var(--brown-dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.875rem;
+            margin-top: var(--spacing-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .add-item-btn:hover {
+            background: var(--gold-light);
+        }
+        
+        /* Gallery images container */
+        .gallery-images-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .gallery-image-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 2px solid var(--gray-200);
+        }
+        
+        .gallery-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-image-item .remove-image {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .gallery-image-item .remove-image:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray-400);
+            transition: var(--transition-fast);
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: var(--transition-fast);
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--gold-primary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Email Form */
+        .email-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-main {
+                padding: var(--spacing-md);
+            }
+            
+            .dashboard-table th,
+            .dashboard-table td {
+                font-size: 0.75rem;
+                padding: var(--spacing-sm);
+            }
+            
+            .action-btn {
+                padding: 0.25rem 0.35rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-sidebar-header">
+                <img src="https://i.postimg.cc/d0Pfc81d/Logo.jpg" alt="Logo">
+                <h3>لوحة التحكم</h3>
+                <p>رحلة في مصر</p>
+            </div>
+            <nav class="dashboard-nav-menu">
+                <div class="dashboard-nav-item">
+                    <a href="#" class="dashboard-nav-link active" data-tab="overview">
+                        <i class="fas fa-chart-line"></i>
+                        <span>نظرة عامة</span>
+                    </a>
+                </div>
+                <div class="dashboard-nav-item">
+                    <a href="#" class="dashboard-nav-link" data-tab="tours">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>الرحلات</span>
+                    </a>
+                </div>
+                <div class="dashboard-nav-item">
+                    <a href="#" class="dashboard-nav-link" data-tab="bookings">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>الحجوزات</span>
+                    </a>
+                </div>
+                <div class="dashboard-nav-item">
+                    <a href="#" class="dashboard-nav-link" data-tab="ratings">
+                        <i class="fas fa-star"></i>
+                        <span>التقييمات</span>
+                    </a>
+                </div>
+                <div class="dashboard-nav-item">
+                    <a href="#" class="dashboard-nav-link" data-tab="contacts">
+                        <i class="fas fa-envelope"></i>
+                        <span>الرسائل</span>
+                    </a>
+                </div>
+                <div class="dashboard-nav-item">
+                    <a href="#" class="dashboard-nav-link" data-tab="messages">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>إرسال رسالة</span>
+                    </a>
+                </div>
+                <div class="dashboard-nav-item" style="margin-top: auto; border-top: 1px solid var(--gray-200); padding-top: var(--spacing-md);">
+                    <a href="#" class="dashboard-nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>تسجيل الخروج</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <h1 id="dashboardTitle"><i class="fas fa-chart-line"></i> نظرة عامة</h1>
+                <div class="dashboard-header-actions">
+                    <button id="sidebarToggle" class="icon-btn" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button id="darkModeDashboard" class="icon-btn">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button onclick="logout()" class="btn btn-outline btn-sm">
+                        <i class="fas fa-sign-out-alt"></i> خروج
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Panes -->
+            <!-- Overview Tab -->
+            <div id="tab-overview" class="dashboard-tab-pane active">
+                <!-- Stats Cards will be populated by JS -->
+                <div class="dashboard-stats" id="statsContainer">
+                    <div class="loading"><div class="loading-spinner"></div></div>
+                </div>
+                
+                <!-- Recent Bookings -->
+                <div class="dashboard-card">
+                    <div class="dashboard-card-header">
+                        <h2><i class="fas fa-clock"></i> أحدث الحجوزات</h2>
+                        <button onclick="switchToTab('bookings')" class="btn btn-outline btn-sm">عرض الكل</button>
+                    </div>
+                    <div class="dashboard-table-container">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr><th>العميل</th><th>الرحلة</th><th>المبلغ</th><th>الحالة</th><th>التاريخ</th><th></th></tr>
+                            </thead>
+                            <tbody id="recentBookingsBody">
+                                <tr><td colspan="6" class="text-center"><div class="loading-spinner"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Recent Ratings -->
+                <div class="dashboard-card">
+                    <div class="dashboard-card-header">
+                        <h2><i class="fas fa-star"></i> أحدث التقييمات</h2>
+                        <button onclick="switchToTab('ratings')" class="btn btn-outline btn-sm">عرض الكل</button>
+                    </div>
+                    <div class="dashboard-table-container">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr><th>العميل</th><th>الدولة</th><th>التقييم</th><th>الرسالة</th><th>التاريخ</th><th></th></tr>
+                            </thead>
+                            <tbody id="recentRatingsBody">
+                                <tr><td colspan="6" class="text-center"><div class="loading-spinner"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tours Tab -->
+            <div id="tab-tours" class="dashboard-tab-pane">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-header">
+                        <h2><i class="fas fa-map-marked-alt"></i> إدارة الرحلات</h2>
+                        <button onclick="showAddTourModal()" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> إضافة رحلة جديدة
+                        </button>
+                    </div>
+                    <div class="dashboard-table-container">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr><th>الصورة</th><th>الاسم (عربي)</th><th>الاسم (إنجليزي)</th><th>السعر (مصري)</th><th>السعر (أجنبي)</th><th>المدة</th><th>الحالة</th><th>الإجراءات</th></tr>
+                            </thead>
+                            <tbody id="toursTableBody">
+                                <tr><td colspan="8" class="text-center"><div class="loading-spinner"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bookings Tab -->
+            <div id="tab-bookings" class="dashboard-tab-pane">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-header">
+                        <h2><i class="fas fa-calendar-check"></i> إدارة الحجوزات</h2>
+                        <div class="search-bar" style="width: 300px;">
+                            <input type="text" id="searchBookingsInput" placeholder="بحث بالاسم أو البريد...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="dashboard-table-container">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr><th>العميل</th><th>الرحلة</th><th>عدد الأفراد</th><th>المبلغ</th><th>الحالة</th><th>تاريخ الحجز</th><th>الإجراءات</th></tr>
+                            </thead>
+                            <tbody id="bookingsTableBody">
+                                <tr><td colspan="7" class="text-center"><div class="loading-spinner"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ratings Tab -->
+            <div id="tab-ratings" class="dashboard-tab-pane">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-header">
+                        <h2><i class="fas fa-star"></i> إدارة التقييمات</h2>
+                    </div>
+                    <div class="dashboard-table-container">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr><th>العميل</th><th>الدولة</th><th>التقييم</th><th>الرسالة</th><th>التاريخ</th><th>الإجراءات</th></tr>
+                            </thead>
+                            <tbody id="ratingsTableBody">
+                                <tr><td colspan="6" class="text-center"><div class="loading-spinner"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacts Tab -->
+            <div id="tab-contacts" class="dashboard-tab-pane">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-header">
+                        <h2><i class="fas fa-envelope"></i> رسائل العملاء</h2>
+                    </div>
+                    <div class="dashboard-table-container">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr><th>المرسل</th><th>البريد</th><th>الموضوع</th><th>الرسالة</th><th>التاريخ</th><th>الحالة</th><th>الإجراءات</th></tr>
+                            </thead>
+                            <tbody id="contactsTableBody">
+                                <tr><td colspan="7" class="text-center"><div class="loading-spinner"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Send Message Tab -->
+            <div id="tab-messages" class="dashboard-tab-pane">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-header">
+                        <h2><i class="fas fa-paper-plane"></i> إرسال رسالة إلكترونية</h2>
+                    </div>
+                    <div class="email-form-container">
+                        <form id="emailForm" class="dashboard-form">
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                                <input type="email" id="email_to" class="form-input" placeholder="example@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-tag"></i> الموضوع</label>
+                                <input type="text" id="email_subject" class="form-input" placeholder="موضوع الرسالة" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-comment"></i> محتوى الرسالة</label>
+                                <textarea id="email_message" class="form-textarea" rows="8" placeholder="أدخل محتوى الرسالة هنا..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                            </button>
+                        </form>
+                        <div id="emailStatus" style="margin-top: var(--spacing-md);"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Tour Modal -->
+    <div id="tourModal" class="modal">
+        <div class="modal-content dashboard-modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 id="tourModalTitle">إضافة رحلة جديدة</h3>
+                <span class="modal-close" onclick="closeTourModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="tourForm" onsubmit="saveTour(event)">
+                    <!-- Basic Info -->
+                    <div class="dashboard-form-row">
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-language"></i> اسم الرحلة (عربي)</label>
+                            <input type="text" id="tour_nameAr" class="form-input" required>
+                        </div>
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-language"></i> اسم الرحلة (English)</label>
+                            <input type="text" id="tour_nameEn" class="form-input" required>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-form-row">
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-dollar-sign"></i> السعر للمصريين (EGP)</label>
+                            <input type="number" id="tour_priceEgyptian" class="form-input" required>
+                        </div>
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-dollar-sign"></i> السعر للأجانب (USD)</label>
+                            <input type="number" id="tour_priceForeign" class="form-input" required>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-form-row">
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-clock"></i> المدة</label>
+                            <input type="text" id="tour_duration" class="form-input" placeholder="مثال: 4 ساعات" required>
+                        </div>
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-users"></i> الحد الأقصى للأفراد</label>
+                            <input type="number" id="tour_maxPersons" class="form-input" value="20">
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-form-row">
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> مكان الانطلاق</label>
+                            <input type="text" id="tour_startLocation" class="form-input" placeholder="مثال: القاهرة">
+                        </div>
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-clock"></i> وقت الانطلاق</label>
+                            <input type="text" id="tour_pickupTime" class="form-input" placeholder="مثال: 08:00 صباحاً">
+                        </div>
+                    </div>
+                    
+                    <!-- Descriptions -->
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-align-right"></i> وصف مختصر (عربي)</label>
+                        <textarea id="tour_shortDescriptionAr" class="form-textarea" rows="2"></textarea>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-align-left"></i> Short Description (English)</label>
+                        <textarea id="tour_shortDescriptionEn" class="form-textarea" rows="2"></textarea>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-file-alt"></i> وصف كامل (عربي)</label>
+                        <textarea id="tour_descriptionAr" class="form-textarea" rows="4"></textarea>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-file-alt"></i> Full Description (English)</label>
+                        <textarea id="tour_descriptionEn" class="form-textarea" rows="4"></textarea>
+                    </div>
+                    
+                    <!-- Itinerary -->
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-list-ol"></i> برنامج الرحلة (عربي)</label>
+                        <div id="itineraryAr_container" class="array-items-container"></div>
+                        <button type="button" class="add-item-btn" onclick="addArrayFieldItem('itineraryAr')">
+                            <i class="fas fa-plus"></i> إضافة نقطة
+                        </button>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-list-ol"></i> Itinerary (English)</label>
+                        <div id="itineraryEn_container" class="array-items-container"></div>
+                        <button type="button" class="add-item-btn" onclick="addArrayFieldItem('itineraryEn')">
+                            <i class="fas fa-plus"></i> Add Point
+                        </button>
+                    </div>
+                    
+                    <!-- Included -->
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-check-circle"></i> يشمل (عربي)</label>
+                        <div id="includedAr_container" class="array-items-container"></div>
+                        <button type="button" class="add-item-btn" onclick="addArrayFieldItem('includedAr')">
+                            <i class="fas fa-plus"></i> إضافة
+                        </button>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-check-circle"></i> Included (English)</label>
+                        <div id="includedEn_container" class="array-items-container"></div>
+                        <button type="button" class="add-item-btn" onclick="addArrayFieldItem('includedEn')">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    
+                    <!-- Excluded -->
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-times-circle"></i> لا يشمل (عربي)</label>
+                        <div id="excludedAr_container" class="array-items-container"></div>
+                        <button type="button" class="add-item-btn" onclick="addArrayFieldItem('excludedAr')">
+                            <i class="fas fa-plus"></i> إضافة
+                        </button>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-times-circle"></i> Excluded (English)</label>
+                        <div id="excludedEn_container" class="array-items-container"></div>
+                        <button type="button" class="add-item-btn" onclick="addArrayFieldItem('excludedEn')">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    
+                    <!-- Images -->
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-image"></i> الصورة الرئيسية (URL)</label>
+                        <input type="url" id="tour_mainImage" class="form-input" placeholder="https://...">
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label><i class="fas fa-images"></i> معرض الصور</label>
+                        <div id="gallery_container" class="gallery-images-container"></div>
+                        <button type="button" class="add-item-btn" onclick="addGalleryImageField()">
+                            <i class="fas fa-plus"></i> إضافة صورة
+                        </button>
+                    </div>
+                    
+                    <!-- Status -->
+                    <div class="dashboard-form-row">
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-toggle-on"></i> الرحلة نشطة</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="tour_isActive" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="dashboard-form-group">
+                            <label><i class="fas fa-star"></i> مميزة</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="tour_featured">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="tour_id">
+                    
+                    <div class="modal-footer" style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-xl);">
+                        <button type="button" class="btn btn-outline" onclick="closeTourModal()">إلغاء</button>
+                        <button type="submit" class="btn btn-primary">حفظ الرحلة</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/dashboard.js"></script>
+    
+    <script>
+        // Additional functions for dashboard
+        let dashboardData = {
+            tours: [],
+            bookings: [],
+            ratings: [],
+            contacts: []
+        };
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check auth
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            // Dark mode for dashboard
+            const darkBtn = document.getElementById('darkModeDashboard');
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                darkBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            darkBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkNow = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkNow);
+                darkBtn.innerHTML = isDarkNow ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            });
+            
+            // Mobile sidebar toggle
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.querySelector('.dashboard-sidebar');
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.style.display = 'block';
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                });
+            }
+            
+            // Load data
+            await loadAllDashboardData();
+            
+            // Setup tabs
+            setupTabs();
+            
+            // Setup search
+            const searchInput = document.getElementById('searchBookingsInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    filterBookings(e.target.value);
+                });
+            }
+            
+            // Email form
+            const emailForm = document.getElementById('emailForm');
+            if (emailForm) {
+                emailForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    await sendEmail();
+                });
+            }
+        });
+        
+        async function loadAllDashboardData() {
+            try {
+                const [tours, bookings, ratings, contacts] = await Promise.all([
+                    api.get('/api/v1/tours', true),
+                    api.get('/api/v1/bookings', true),
+                    api.get('/api/v1/ratings', true),
+                    api.get('/api/v1/contacts', true)
+                ]);
+                
+                dashboardData.tours = tours || [];
+                dashboardData.bookings = bookings || [];
+                dashboardData.ratings = ratings || [];
+                dashboardData.contacts = contacts || [];
+                
+                updateStats();
+                renderRecentBookings();
+                renderRecentRatings();
+                renderToursTable();
+                renderBookingsTable();
+                renderRatingsTable();
+                renderContactsTable();
+                
+            } catch (error) {
+                console.error('Load data error:', error);
+                utils.showToast('فشل تحميل البيانات', 'error');
+            }
+        }
+        
+        function updateStats() {
+            const today = new Date().toDateString();
+            const todayBookings = dashboardData.bookings.filter(b => 
+                new Date(b.createdAt).toDateString() === today
+            ).length;
+            
+            const month = new Date().getMonth();
+            const year = new Date().getFullYear();
+            const monthBookings = dashboardData.bookings.filter(b => {
+                const d = new Date(b.createdAt);
+                return d.getMonth() === month && d.getFullYear() === year;
+            }).length;
+            
+            const totalRevenue = dashboardData.bookings
+                .filter(b => b.payment?.status === 'confirmed')
+                .reduce((sum, b) => sum + (b.pricing?.totalAmount || 0), 0);
+            
+            const avgRating = dashboardData.ratings.length 
+                ? (dashboardData.ratings.reduce((s, r) => s + r.rating, 0) / dashboardData.ratings.length).toFixed(1)
+                : 0;
+            
+            const statsContainer = document.getElementById('statsContainer');
+            statsContainer.innerHTML = `
+                <div class="stat-card-dashboard">
+                    <div class="stat-info-dashboard">
+                        <h3>إجمالي الرحلات</h3>
+                        <div class="stat-number">${dashboardData.tours.length}</div>
+                    </div>
+                    <div class="stat-icon-dashboard"><i class="fas fa-map-marked-alt"></i></div>
+                </div>
+                <div class="stat-card-dashboard">
+                    <div class="stat-info-dashboard">
+                        <h3>إجمالي الحجوزات</h3>
+                        <div class="stat-number">${dashboardData.bookings.length}</div>
+                    </div>
+                    <div class="stat-icon-dashboard"><i class="fas fa-calendar-check"></i></div>
+                </div>
+                <div class="stat-card-dashboard">
+                    <div class="stat-info-dashboard">
+                        <h3>حجوزات اليوم</h3>
+                        <div class="stat-number">${todayBookings}</div>
+                    </div>
+                    <div class="stat-icon-dashboard"><i class="fas fa-calendar-day"></i></div>
+                </div>
+                <div class="stat-card-dashboard">
+                    <div class="stat-info-dashboard">
+                        <h3>حجوزات الشهر</h3>
+                        <div class="stat-number">${monthBookings}</div>
+                    </div>
+                    <div class="stat-icon-dashboard"><i class="fas fa-chart-line"></i></div>
+                </div>
+                <div class="stat-card-dashboard">
+                    <div class="stat-info-dashboard">
+                        <h3>الإيرادات</h3>
+                        <div class="stat-number">${totalRevenue.toLocaleString()} ج</div>
+                    </div>
+                    <div class="stat-icon-dashboard"><i class="fas fa-dollar-sign"></i></div>
+                </div>
+                <div class="stat-card-dashboard">
+                    <div class="stat-info-dashboard">
+                        <h3>متوسط التقييمات</h3>
+                        <div class="stat-number">${avgRating} ★</div>
+                    </div>
+                    <div class="stat-icon-dashboard"><i class="fas fa-star"></i></div>
+                </div>
+            `;
+        }
+        
+        function renderRecentBookings() {
+            const tbody = document.getElementById('recentBookingsBody');
+            const recent = dashboardData.bookings.slice(0, 5);
+            
+            if (recent.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">لا توجد حجوزات</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = recent.map(booking => `
+                <tr>
+                    <td>
+                        <strong>${utils.escapeHtml(booking.customer?.name || '-')}</strong><br>
+                        <small>${utils.escapeHtml(booking.customer?.email || '-')}</small>
+                    </td>
+                    <td>${utils.escapeHtml(booking.tourName || '-')}</td>
+                    <td>${booking.pricing?.totalAmount || 0} ${booking.pricing?.currency === 'EGP' ? 'ج' : '$'}</td>
+                    <td><span class="status-badge status-${booking.payment?.status || 'pending'}">${getStatusText(booking.payment?.status)}</span></td>
+                    <td>${utils.formatDate(booking.createdAt)}</td>
+                    <td><button class="action-btn action-btn-view" onclick="viewBookingDetails('${booking.id}')"><i class="fas fa-eye"></i></button></td>
+                </table>
+            `).join('');
+        }
+        
+        function renderRecentRatings() {
+            const tbody = document.getElementById('recentRatingsBody');
+            const recent = dashboardData.ratings.slice(0, 5);
+            
+            if (recent.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">لا توجد تقييمات</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = recent.map(rating => `
+                <tr>
+                    <td>${utils.escapeHtml(rating.name)}</td>
+                    <td>${utils.escapeHtml(rating.country)}</td>
+                    <td>${generateStarsMini(rating.rating)}</td>
+                    <td><small>${utils.escapeHtml(rating.message?.substring(0, 50))}${rating.message?.length > 50 ? '...' : ''}</small></td>
+                    <td>${utils.formatDate(rating.createdAt)}</td>
+                    <td><button class="action-btn action-btn-delete" onclick="deleteRatingItem('${rating.id}')"><i class="fas fa-trash"></i></button></td>
+                </tr>
+            `).join('');
+        }
+        
+        function renderToursTable() {
+            const tbody = document.getElementById('toursTableBody');
+            
+            if (dashboardData.tours.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center">لا توجد رحلات</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = dashboardData.tours.map(tour => `
+                <tr>
+                    <td><img src="${tour.mainImage || '/assets/images/default-tour.jpg'}" class="tour-image-thumb" onerror="this.src='/assets/images/default-tour.jpg'"></td>
+                    <td>${utils.escapeHtml(tour.nameAr)}</td>
+                    <td>${utils.escapeHtml(tour.nameEn)}</td>
+                    <td>${tour.priceEgyptian.toLocaleString()} ج</td>
+                    <td>${tour.priceForeign} $</td>
+                    <td>${tour.duration || '-'}</td>
+                    <td>${tour.isActive ? '<span class="status-badge status-confirmed">نشط</span>' : '<span class="status-badge status-pending">غير نشط</span>'}</td>
+                    <td>
+                        <button class="action-btn action-btn-edit" onclick="editTourItem('${tour.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn action-btn-delete" onclick="deleteTourItem('${tour.id}')"><i class="fas fa-trash"></i></button>
+                     </td>
+                </tr>
+            `).join('');
+        }
+        
+        function renderBookingsTable() {
+            const tbody = document.getElementById('bookingsTableBody');
+            
+            if (dashboardData.bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center">لا توجد حجوزات</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = dashboardData.bookings.map(booking => `
+                <tr>                    <td>
+                        <strong>${utils.escapeHtml(booking.customer?.name || '-')}</strong><br>
+                        <small>${utils.escapeHtml(booking.customer?.email || '-')}</small>
+                    </strong></td>
+                    <td>${utils.escapeHtml(booking.tourName || '-')}</strong></td>
+                    <td>${booking.details?.persons || 1}</strong></td>
+                    <td>${booking.pricing?.totalAmount || 0} ${booking.pricing?.currency === 'EGP' ? 'ج' : '$'}</strong></td>
+                    <td><span class="status-badge status-${booking.payment?.status || 'pending'}">${getStatusText(booking.payment?.status)}</span></strong></td>
+                    <td>${utils.formatDate(booking.createdAt)}</strong></td>
+                    <td>
+                        <button class="action-btn action-btn-view" onclick="viewBookingDetails('${booking.id}')"><i class="fas fa-eye"></i></button>
+                        <button class="action-btn action-btn-edit" onclick="updateBookingStatusItem('${booking.id}', 'confirmed')"><i class="fas fa-check-circle"></i></button>
+                        <button class="action-btn action-btn-delete" onclick="deleteBookingItem('${booking.id}')"><i class="fas fa-trash"></i></button>
+                     </strong></td>
+                </tr>
+            `).join('');
+        }
+        
+        function filterBookings(searchTerm) {
+            const filtered = dashboardData.bookings.filter(b => 
+                b.customer?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                b.customer?.email?.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            const tbody = document.getElementById('bookingsTableBody');
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center">لا توجد نتائج匹配</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = filtered.map(booking => `
+                <tr>
+                    <td><strong>${utils.escapeHtml(booking.customer?.name)}</strong><br><small>${utils.escapeHtml(booking.customer?.email)}</small></td>
+                    <td>${utils.escapeHtml(booking.tourName)}</td>
+                    <td>${booking.details?.persons}</td>
+                    <td>${booking.pricing?.totalAmount} ${booking.pricing?.currency === 'EGP' ? 'ج' : '$'}</td>
+                    <td><span class="status-badge status-${booking.payment?.status}">${getStatusText(booking.payment?.status)}</span></td>
+                    <td>${utils.formatDate(booking.createdAt)}</td>
+                    <td>
+                        <button class="action-btn action-btn-view" onclick="viewBookingDetails('${booking.id}')"><i class="fas fa-eye"></i></button>
+                        <button class="action-btn action-btn-edit" onclick="updateBookingStatusItem('${booking.id}', 'confirmed')"><i class="fas fa-check-circle"></i></button>
+                        <button class="action-btn action-btn-delete" onclick="deleteBookingItem('${booking.id}')"><i class="fas fa-trash"></i></button>
+                     </td>
+                </tr>
+            `).join('');
+        }
+        
+        function renderRatingsTable() {
+            const tbody = document.getElementById('ratingsTableBody');
+            
+            if (dashboardData.ratings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">لا توجد تقييمات</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = dashboardData.ratings.map(rating => `
+                <tr>
+                    <td>${utils.escapeHtml(rating.name)}</td>
+                    <td>${utils.escapeHtml(rating.country)}</td>
+                    <td>${generateStarsMini(rating.rating)} (${rating.rating}/5)</td>
+                    <td><small>${utils.escapeHtml(rating.message?.substring(0, 80))}${rating.message?.length > 80 ? '...' : ''}</small></td>
+                    <td>${utils.formatDate(rating.createdAt)}</td>
+                    <td><button class="action-btn action-btn-delete" onclick="deleteRatingItem('${rating.id}')"><i class="fas fa-trash"></i></button></td>
+                </tr>
+            `).join('');
+        }
+        
+        function renderContactsTable() {
+            const tbody = document.getElementById('contactsTableBody');
+            
+            if (dashboardData.contacts.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center">لا توجد رسائل</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = dashboardData.contacts.map(contact => `
+                <tr>
+                    <td>${utils.escapeHtml(contact.name)}</td>
+                    <td>${utils.escapeHtml(contact.email)}</td>
+                    <td>${utils.escapeHtml(contact.subject || 'بدون موضوع')}</td>
+                    <td><small>${utils.escapeHtml(contact.message?.substring(0, 60))}${contact.message?.length > 60 ? '...' : ''}</small></td>
+                    <td>${utils.formatDate(contact.createdAt)}</td>
+                    <td>${contact.status === 'unread' ? '<span class="status-badge status-pending">جديد</span>' : '<span class="status-badge status-confirmed">مقروء</span>'}</td>
+                    <td>
+                        <button class="action-btn action-btn-view" onclick="viewContactMessage('${contact.id}')"><i class="fas fa-eye"></i></button>
+                        <button class="action-btn action-btn-delete" onclick="deleteContactItem('${contact.id}')"><i class="fas fa-trash"></i></button>
+                     </td>
+                </tr>
+            `).join('');
+        }
+        
+        // CRUD Operations
+        async function deleteTourItem(tourId) {
+            if (!confirm('هل أنت متأكد من حذف هذه الرحلة؟ سيتم حذف جميع الحجوزات المرتبطة بها.')) return;
+            
+            try {
+                await api.delete(`/api/v1/tours/${tourId}`, true);
+                utils.showToast('تم حذف الرحلة بنجاح', 'success');
+                await loadAllDashboardData();
+            } catch (error) {
+                utils.showToast('فشل حذف الرحلة', 'error');
+            }
+        }
+        
+        async function deleteBookingItem(bookingId) {
+            if (!confirm('هل أنت متأكد من حذف هذا الحجز؟')) return;
+            
+            try {
+                await api.delete(`/api/v1/bookings/${bookingId}`, true);
+                utils.showToast('تم حذف الحجز بنجاح', 'success');
+                await loadAllDashboardData();
+            } catch (error) {
+                utils.showToast('فشل حذف الحجز', 'error');
+            }
+        }
+        
+        async function updateBookingStatusItem(bookingId, status) {
+            try {
+                await api.put(`/api/v1/bookings/${bookingId}`, { paymentStatus: status }, true);
+                utils.showToast(`تم تحديث الحالة إلى ${getStatusText(status)}`, 'success');
+                await loadAllDashboardData();
+            } catch (error) {
+                utils.showToast('فشل تحديث الحالة', 'error');
+            }
+        }
+        
+        async function deleteRatingItem(ratingId) {
+            if (!confirm('هل أنت متأكد من حذف هذا التقييم؟')) return;
+            
+            try {
+                await api.delete(`/api/v1/ratings/${ratingId}`, true);
+                utils.showToast('تم حذف التقييم بنجاح', 'success');
+                await loadAllDashboardData();
+            } catch (error) {
+                utils.showToast('فشل حذف التقييم', 'error');
+            }
+        }
+        
+        async function deleteContactItem(contactId) {
+            if (!confirm('هل أنت متأكد من حذف هذه الرسالة؟')) return;
+            
+            try {
+                await api.delete(`/api/v1/contacts/${contactId}`, true);
+                utils.showToast('تم حذف الرسالة بنجاح', 'success');
+                await loadAllDashboardData();
+            } catch (error) {
+                utils.showToast('فشل حذف الرسالة', 'error');
+            }
+        }
+        
+        async function viewContactMessage(contactId) {
+            const contact = dashboardData.contacts.find(c => c.id === contactId);
+            if (!contact) return;
+            
+            const message = `
+                <div class="modal-header">
+                    <h3>رسالة من ${utils.escapeHtml(contact.name)}</h3>
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p><strong>الاسم:</strong> ${utils.escapeHtml(contact.name)}</p>
+                    <p><strong>البريد:</strong> ${utils.escapeHtml(contact.email)}</p>
+                    ${contact.phone ? `<p><strong>الهاتف:</strong> ${utils.escapeHtml(contact.phone)}</p>` : ''}
+                    <p><strong>الموضوع:</strong> ${utils.escapeHtml(contact.subject || 'بدون موضوع')}</p>
+                    <hr>
+                    <p><strong>الرسالة:</strong></p>
+                    <div style="background: var(--gray-100); padding: 1rem; border-radius: 8px; white-space: pre-wrap;">
+                        ${utils.escapeHtml(contact.message)}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="replyToContactMessage('${contact.email}')" class="btn btn-primary">رد</button>
+                    <button onclick="closeModal()" class="btn btn-outline">إغلاق</button>
+                </div>
+            `;
+            showModal(message);
+            
+            if (contact.status === 'unread') {
+                await api.put(`/api/v1/contacts/${contactId}`, { status: 'read' }, true);
+                await loadAllDashboardData();
+            }
+        }
+        
+        function replyToContactMessage(email) {
+            closeModal();
+            switchToTab('messages');
+            document.getElementById('email_to').value = email;
+            document.getElementById('email_subject').focus();
+        }
+        
+        async function sendEmail() {
+            const to = document.getElementById('email_to').value;
+            const subject = document.getElementById('email_subject').value;
+            const message = document.getElementById('email_message').value;
+            const statusDiv = document.getElementById('emailStatus');
+            
+            if (!to || !subject || !message) {
+                utils.showToast('الرجاء ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            const submitBtn = document.querySelector('#emailForm button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+            
+            try {
+                const response = await api.post('/api/v1/admin/send-email', { to, subject, message }, true);
+                
+                if (response.success) {
+                    utils.showToast('تم إرسال البريد الإلكتروني بنجاح', 'success');
+                    document.getElementById('emailForm').reset();
+                    statusDiv.innerHTML = '<div class="success-message">✅ تم الإرسال بنجاح</div>';
+                    setTimeout(() => statusDiv.innerHTML = '', 3000);
+                } else {
+                    utils.showToast(response.error || 'فشل الإرسال', 'error');
+                }
+            } catch (error) {
+                utils.showToast('فشل إرسال البريد', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+        
+        // Helper Functions
+        function generateStarsMini(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += i <= rating ? '<i class="fas fa-star" style="color: #D4AF37;"></i>' : '<i class="far fa-star" style="color: #D4AF37;"></i>';
+            }
+            return stars;
+        }
+        
+        function getStatusText(status) {
+            const map = {
+                'pending': 'قيد الانتظار',
+                'confirmed': 'مؤكد',
+                'cancelled': 'ملغي',
+                'unread': 'غير مقروء',
+                'read': 'مقروء'
+            };
+            return map[status] || status;
+        }
+        
+        function setupTabs() {
+            const navLinks = document.querySelectorAll('.dashboard-nav-link');
+            const panes = document.querySelectorAll('.dashboard-tab-pane');
+            const titleMap = {
+                'overview': 'نظرة عامة',
+                'tours': 'إدارة الرحلات',
+                'bookings': 'إدارة الحجوزات',
+                'ratings': 'إدارة التقييمات',
+                'contacts': 'الرسائل',
+                'messages': 'إرسال رسالة'
+            };
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tabId = link.getAttribute('data-tab');
+                    
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    panes.forEach(pane => pane.classList.remove('active'));
+                    document.getElementById(`tab-${tabId}`).classList.add('active');
+                    
+                    const titleEl = document.getElementById('dashboardTitle');
+                    if (titleEl && titleMap[tabId]) {
+                        titleEl.innerHTML = `<i class="fas ${getTabIcon(tabId)}"></i> ${titleMap[tabId]}`;
+                    }
+                });
+            });
+        }
+        
+        function getTabIcon(tab) {
+            const icons = {
+                'overview': 'fa-chart-line',
+                'tours': 'fa-map-marked-alt',
+                'bookings': 'fa-calendar-check',
+                'ratings': 'fa-star',
+                'contacts': 'fa-envelope',
+                'messages': 'fa-paper-plane'
+            };
+            return icons[tab] || 'fa-chart-line';
+        }
+        
+        function switchToTab(tabId) {
+            const link = document.querySelector(`.dashboard-nav-link[data-tab="${tabId}"]`);
+            if (link) link.click();
+        }
+        
+        function showModal(content) {
+            let modal = document.getElementById('dynamicModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'dynamicModal';
+                modal.className = 'modal';
+                modal.innerHTML = '<div class="modal-content dashboard-modal"></div>';
+                document.body.appendChild(modal);
+            }
+            modal.querySelector('.modal-content').innerHTML = content;
+            modal.classList.add('active');
+            modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('dynamicModal');
+            if (modal) modal.classList.remove('active');
+        }
+        
+        function addArrayFieldItem(fieldId) {
+            const container = document.getElementById(`${fieldId}_container`);
+            if (!container) return;
+            
+            const div = document.createElement('div');
+            div.className = 'array-item';
+            div.innerHTML = `
+                <input type="text" class="form-input" placeholder="أدخل نص">
+                <button type="button" class="remove-item-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+        
+        function addGalleryImageField() {
+            const container = document.getElementById('gallery_container');
+            if (!container) return;
+            
+            const div = document.createElement('div');
+            div.className = 'gallery-image-item';
+            div.innerHTML = `
+                <input type="url" class="form-input" placeholder="https://..." style="width: 100%; margin-bottom: 5px;">
+                <button type="button" class="remove-image" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+        
+        function editTourItem(tourId) {
+            const tour = dashboardData.tours.find(t => t.id === tourId);
+            if (!tour) return;
+            
+            document.getElementById('tourModalTitle').textContent = 'تعديل الرحلة';
+            document.getElementById('tour_id').value = tour.id;
+            document.getElementById('tour_nameAr').value = tour.nameAr || '';
+            document.getElementById('tour_nameEn').value = tour.nameEn || '';
+            document.getElementById('tour_priceEgyptian').value = tour.priceEgyptian || '';
+            document.getElementById('tour_priceForeign').value = tour.priceForeign || '';
+            document.getElementById('tour_duration').value = tour.duration || '';
+            document.getElementById('tour_maxPersons').value = tour.maxPersons || 20;
+            document.getElementById('tour_startLocation').value = tour.startLocation || '';
+            document.getElementById('tour_pickupTime').value = tour.pickupTime || '';
+            document.getElementById('tour_shortDescriptionAr').value = tour.shortDescriptionAr || '';
+            document.getElementById('tour_shortDescriptionEn').value = tour.shortDescriptionEn || '';
+            document.getElementById('tour_descriptionAr').value = tour.descriptionAr || '';
+            document.getElementById('tour_descriptionEn').value = tour.descriptionEn || '';
+            document.getElementById('tour_mainImage').value = tour.mainImage || '';
+            document.getElementById('tour_isActive').checked = tour.isActive !== false;
+            document.getElementById('tour_featured').checked = tour.featured === true;
+            
+            // Populate array fields
+            populateArrayField('itineraryAr', tour.itineraryAr || []);
+            populateArrayField('itineraryEn', tour.itineraryEn || []);
+            populateArrayField('includedAr', tour.includedAr || []);
+            populateArrayField('includedEn', tour.includedEn || []);
+            populateArrayField('excludedAr', tour.excludedAr || []);
+            populateArrayField('excludedEn', tour.excludedEn || []);
+            populateGalleryField(tour.galleryImages || []);
+            
+            document.getElementById('tourModal').classList.add('active');
+        }
+        
+        function populateArrayField(fieldId, values) {
+            const container = document.getElementById(`${fieldId}_container`);
+            if (!container) return;
+            container.innerHTML = '';
+            values.forEach(val => {
+                const div = document.createElement('div');
+                div.className = 'array-item';
+                div.innerHTML = `
+                    <input type="text" class="form-input" value="${utils.escapeHtml(val)}">
+                    <button type="button" class="remove-item-btn" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        function populateGalleryField(images) {
+            const container = document.getElementById('gallery_container');
+            if (!container) return;
+            container.innerHTML = '';
+            images.forEach(img => {
+                const div = document.createElement('div');
+                div.className = 'gallery-image-item';
+                div.innerHTML = `
+                    <img src="${img}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px;">
+                    <input type="hidden" value="${img}">
+                    <button type="button" class="remove-image" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        function showAddTourModal() {
+            document.getElementById('tourModalTitle').textContent = 'إضافة رحلة جديدة';
+            document.getElementById('tourForm').reset();
+            document.getElementById('tour_id').value = '';
+            document.getElementById('tour_isActive').checked = true;
+            document.getElementById('tour_featured').checked = false;
+            
+            // Clear array containers
+            ['itineraryAr', 'itineraryEn', 'includedAr', 'includedEn', 'excludedAr', 'excludedEn'].forEach(field => {
+                const container = document.getElementById(`${field}_container`);
+                if (container) container.innerHTML = '';
+            });
+            const galleryContainer = document.getElementById('gallery_container');
+            if (galleryContainer) galleryContainer.innerHTML = '';
+            
+            document.getElementById('tourModal').classList.add('active');
+        }
+        
+        async function saveTour(event) {
+            event.preventDefault();
+            
+            const tourData = {
+                nameAr: document.getElementById('tour_nameAr').value,
+                nameEn: document.getElementById('tour_nameEn').value,
+                slug: utils.generateSlug(document.getElementById('tour_nameEn').value),
+                priceEgyptian: parseInt(document.getElementById('tour_priceEgyptian').value),
+                priceForeign: parseInt(document.getElementById('tour_priceForeign').value),
+                duration: document.getElementById('tour_duration').value,
+                maxPersons: parseInt(document.getElementById('tour_maxPersons').value) || 20,
+                startLocation: document.getElementById('tour_startLocation').value,
+                pickupTime: document.getElementById('tour_pickupTime').value,
+                shortDescriptionAr: document.getElementById('tour_shortDescriptionAr').value,
+                shortDescriptionEn: document.getElementById('tour_shortDescriptionEn').value,
+                descriptionAr: document.getElementById('tour_descriptionAr').value,
+                descriptionEn: document.getElementById('tour_descriptionEn').value,
+                mainImage: document.getElementById('tour_mainImage').value,
+                isActive: document.getElementById('tour_isActive').checked,
+                featured: document.getElementById('tour_featured').checked,
+                itineraryAr: getArrayValues('itineraryAr'),
+                itineraryEn: getArrayValues('itineraryEn'),
+                includedAr: getArrayValues('includedAr'),
+                includedEn: getArrayValues('includedEn'),
+                excludedAr: getArrayValues('excludedAr'),
+                excludedEn: getArrayValues('excludedEn'),
+                galleryImages: getGalleryValues()
+            };
+            
+            const tourId = document.getElementById('tour_id').value;
+            
+            try {
+                let result;
+                if (tourId) {
+                    result = await api.put(`/api/v1/tours/${tourId}`, tourData, true);
+                    utils.showToast('تم تحديث الرحلة بنجاح', 'success');
+                } else {
+                    result = await api.post('/api/v1/tours', tourData, true);
+                    utils.showToast('تم إضافة الرحلة بنجاح', 'success');
+                }
+                closeTourModal();
+                await loadAllDashboardData();
+            } catch (error) {
+                console.error('Save error:', error);
+                utils.showToast('فشل حفظ الرحلة', 'error');
+            }
+        }
+        
+        function getArrayValues(fieldId) {
+            const container = document.getElementById(`${fieldId}_container`);
+            if (!container) return [];
+            const inputs = container.querySelectorAll('input[type="text"]');
+            return Array.from(inputs).map(i => i.value).filter(v => v.trim());
+        }
+        
+        function getGalleryValues() {
+            const container = document.getElementById('gallery_container');
+            if (!container) return [];
+            const inputs = container.querySelectorAll('input[type="url"], input[type="hidden"]');
+            return Array.from(inputs).map(i => i.value).filter(v => v.trim());
+        }
+        
+        function closeTourModal() {
+            document.getElementById('tourModal').classList.remove('active');
+        }
+        
+        async function viewBookingDetails(bookingId) {
+            const booking = dashboardData.bookings.find(b => b.id === bookingId);
+            if (!booking) return;
+            
+            const modalContent = `
+                <div class="modal-header">
+                    <h3>تفاصيل الحجز</h3>
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <h4>معلومات العميل</h4>
+                    <p><strong>الاسم:</strong> ${utils.escapeHtml(booking.customer?.name)}</p>
+                    <p><strong>البريد:</strong> ${utils.escapeHtml(booking.customer?.email)}</p>
+                    <p><strong>الهاتف:</strong> ${utils.escapeHtml(booking.customer?.phone)}</p>
+                    <p><strong>الجنسية:</strong> ${booking.customer?.nationality === 'egyptian' ? 'مصري' : 'أجنبي'}</p>
+                    
+                    <h4>معلومات الرحلة</h4>
+                    <p><strong>الرحلة:</strong> ${utils.escapeHtml(booking.tourName)}</p>
+                    <p><strong>عدد الأفراد:</strong> ${booking.details?.persons}</p>
+                    <p><strong>التاريخ:</strong> ${booking.details?.date}</p>
+                    
+                    <h4>معلومات الدفع</h4>
+                    <p><strong>المبلغ:</strong> ${booking.pricing?.totalAmount} ${booking.pricing?.currency === 'EGP' ? 'جنيه' : '$'}</p>
+                    <p><strong>رقم التحويل:</strong> ${booking.payment?.transferNumber || '-'}</p>
+                    <p><strong>الحالة:</strong> <span class="status-badge status-${booking.payment?.status}">${getStatusText(booking.payment?.status)}</span></p>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="closeModal()" class="btn btn-outline">إغلاق</button>
+                    ${booking.payment?.status !== 'confirmed' ? `<button onclick="updateBookingStatusItem('${booking.id}', 'confirmed'); closeModal();" class="btn btn-primary">تأكيد الحجز</button>` : ''}
+                </div>
+            `;
+            showModal(modalContent);
+        }
+        
+        function logout() {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminUsername');
+            window.location.href = '/login.html';
+        }
+        
+        // Expose functions globally
+        window.switchToTab = switchToTab;
+        window.showAddTourModal = showAddTourModal;
+        window.editTourItem = editTourItem;
+        window.deleteTourItem = deleteTourItem;
+        window.saveTour = saveTour;
+        window.closeTourModal = closeTourModal;
+        window.viewBookingDetails = viewBookingDetails;
+        window.updateBookingStatusItem = updateBookingStatusItem;
+        window.deleteBookingItem = deleteBookingItem;
+        window.deleteRatingItem = deleteRatingItem;
+        window.viewContactMessage = viewContactMessage;
+        window.deleteContactItem = deleteContactItem;
+        window.replyToContactMessage = replyToContactMessage;
+        window.closeModal = closeModal;
+        window.addArrayFieldItem = addArrayFieldItem;
+        window.addGalleryImageField = addGalleryImageField;
+        window.logout = logout;
+    </script>
+</body>
+</html>

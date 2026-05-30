@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>الدفع - تأكيد الحجز | رحلة في مصر</title>
+    
+    <!-- SEO -->
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    
+    <style>
+        /* Payment Page Specific Styles */
+        .payment-wrapper {
+            min-height: 100vh;
+            background: var(--gradient-bg-light);
+            padding: 2rem;
+            padding-top: 100px;
+        }
+        
+        .payment-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .payment-card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+        
+        .payment-header {
+            background: linear-gradient(135deg, #2c1810, #5c2e1a);
+            color: #D4AF37;
+            padding: 1.5rem 2rem;
+            text-align: center;
+        }
+        
+        .payment-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .payment-header p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        .payment-body {
+            padding: 2rem;
+        }
+        
+        /* Booking Summary */
+        .booking-summary {
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .booking-summary h3 {
+            color: var(--gold-primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-row span:first-child {
+            color: var(--text-secondary);
+        }
+        
+        .summary-row span:last-child {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .total-row {
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--gold-primary);
+            font-size: 1.1rem;
+        }
+        
+        .total-row span:last-child {
+            color: var(--gold-primary);
+            font-size: 1.3rem;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            margin-bottom: 1.5rem;
+        }
+        
+        .payment-method {
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .payment-method-radio {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--gold-primary);
+        }
+        
+        .payment-method-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--gold-primary);
+        }
+        
+        .payment-method-info h4 {
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+        
+        .payment-method-info p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Orange Cash Details */
+        .orange-cash-details {
+            background: linear-gradient(135deg, #FF6600, #FF8C00);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .orange-cash-details h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mobile-number {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 1rem 0;
+            direction: ltr;
+            font-family: monospace;
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+        }
+        
+        .beneficiary-name {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Transfer Input */
+        .transfer-input {
+            margin: 1.5rem 0;
+        }
+        
+        .transfer-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .transfer-input input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-family: monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        
+        .transfer-input input:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+        }
+        
+        /* Buttons */
+        .confirm-payment-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #D4AF37, #FF8C00);
+            color: #2c1810;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .confirm-payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .confirm-payment-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Back Button */
+        .back-to-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gold-primary);
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+        
+        .back-to-home:hover {
+            text-decoration: underline;
+        }
+        
+        /* Info Box */
+        .info-box {
+            background: rgba(33, 150, 243, 0.1);
+            border-right: 4px solid #2196f3;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+        
+        .info-box i {
+            color: #2196f3;
+            margin-left: 0.5rem;
+        }
+        
+        .warning-box {
+            background: rgba(255, 152, 0, 0.1);
+            border-right: 4px solid #ff9800;
+        }
+        
+        /* Copy Button */
+        .copy-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            margin-right: 0.5rem;
+        }
+        
+        .copy-btn:hover {
+            background: white;
+            color: #FF6600;
+        }
+        
+        /* Steps */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--gray-300);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: bold;
+            color: var(--text-secondary);
+        }
+        
+        .step.active .step-number {
+            background: var(--gold-primary);
+            color: #2c1810;
+        }
+        
+        .step-text {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Loading */
+        .loading-payment {
+            text-align: center;
+            padding: 4rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+            .payment-wrapper {
+                padding: 1rem;
+                padding-top: 80px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-number {
+                font-size: 1.3rem;
+            }
+            .payment-header h1 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-wrapper">
+        <div class="payment-container">
+            <a href="/" class="back-to-home">
+                <i class="fas fa-arrow-right"></i> العودة إلى الرئيسية
+            </a>
+            
+            <div class="payment-grid">
+                <!-- Left Column - Booking Summary -->
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <h1><i class="fas fa-receipt"></i> ملخص الحجز</h1>
+                        <p>رحلة في مصر - رحلات سياحية مميزة</p>
+                    </div>
+                    <div class="payment-body">
+                        <div id="bookingSummaryContainer">
+                            <div class="loading-payment">
+                                <div class="loading-spinner"></div>
+                                <p style="margin-top: 1rem;">جاري تحميل بيانات الحجز...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Payment -->
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <h1><i class="fas fa-credit-card"></i> إتمام الدفع</h1>
+                        <p>اختر طريقة الدفع المناسبة</p>
+                    </div>
+                    <div class="payment-body">
+                        <!-- Steps -->
+                        <div class="steps">
+                            <div class="step active">
+                                <div class="step-number">1</div>
+                                <div class="step-text">ملخص الحجز</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-text">اختر طريقة الدفع</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-text">تأكيد الدفع</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Methods -->
+                        <div class="payment-methods">
+                            <div class="payment-method selected" data-method="orange-cash" onclick="selectPaymentMethod('orange-cash')">
+                                <input type="radio" name="paymentMethod" class="payment-method-radio" checked>
+                                <div class="payment-method-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="payment-method-info">
+                                    <h4>أورنج كاش (Orange Cash)</h4>
+                                    <p>الدفع عبر محفظة أورنج كاش - سريع وآمن</p>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-method" data-method="vodafone-cash" onclick="selectPaymentMethod('vodafone-cash')" style="opacity: 0.6;">
+                                <input type="radio" name="paymentMethod" class="payment-method-radio" disabled>
+                                <div class="payment-method-icon">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="payment-method-info">
+                                    <h4>فودافون كاش (قريباً)</h4>
+                                    <p>سيتم إتاحته قريباً</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Orange Cash Details -->
+                        <div id="orangeCashDetails" class="orange-cash-details">
+                            <h4><i class="fas fa-mobile-alt"></i> التحويل عبر أورنج كاش</h4>
+                            <div class="mobile-number" id="mobileNumber">
+                                01229971386
+                                <button class="copy-btn" onclick="copyMobileNumber()">
+                                    <i class="fas fa-copy"></i> نسخ
+                                </button>
+                            </div>
+                            <div class="beneficiary-name">
+                                <strong>اسم المستفيد:</strong> سيمون اسحاق
+                            </div>
+                            <div class="steps" style="margin-top: 1rem;">
+                                <div class="step" style="flex: none; width: auto; padding: 0 0.5rem;">
+                                    <div class="step-number" style="width: 25px; height: 25px; font-size: 0.7rem;">1</div>
+                                    <div class="step-text" style="font-size: 0.7rem;">افتح التطبيق</div>
+                                </div>
+                                <div class="step" style="flex: none; width: auto; padding: 0 0.5rem;">
+                                    <div class="step-number" style="width: 25px; height: 25px; font-size: 0.7rem;">2</div>
+                                    <div class="step-text" style="font-size: 0.7rem;">اختر تحويل</div>
+                                </div>
+                                <div class="step" style="flex: none; width: auto; padding: 0 0.5rem;">
+                                    <div class="step-number" style="width: 25px; height: 25px; font-size: 0.7rem;">3</div>
+                                    <div class="step-text" style="font-size: 0.7rem;">أدخل المبلغ</div>
+                                </div>
+                                <div class="step" style="flex: none; width: auto; padding: 0 0.5rem;">
+                                    <div class="step-number" style="width: 25px; height: 25px; font-size: 0.7rem;">4</div>
+                                    <div class="step-text" style="font-size: 0.7rem;">أدخل الرقم المرجعي</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Transfer Number Input -->
+                        <div class="transfer-input">
+                            <label><i class="fas fa-hashtag"></i> رقم التحويل المرجعي</label>
+                            <input type="text" id="transferNumber" placeholder="أدخل رقم التحويل الذي حصلت عليه" autocomplete="off">
+                            <div class="info-box" style="margin-top: 0.5rem;">
+                                <i class="fas fa-info-circle"></i>
+                                سيتم إنشاء رقم تحويل تلقائي عند بدء عملية التحويل. أدخله هنا لتأكيد الحجز.
+                            </div>
+                        </div>
+                        
+                        <!-- Warning Box -->
+                        <div class="info-box warning-box">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <strong>ملاحظة مهمة:</strong> يرجى الاحتفاظ برقم التحويل حتى يتم تأكيد حجزك. سيصلك إيميل تأكيد بعد الدفع.
+                        </div>
+                        
+                        <!-- Confirm Button -->
+                        <button id="confirmPaymentBtn" class="confirm-payment-btn" onclick="processPayment()">
+                            <i class="fas fa-check-circle"></i> تأكيد الدفع وإتمام الحجز
+                        </button>
+                        
+                        <!-- WhatsApp Support -->
+                        <div class="info-box" style="text-align: center; margin-top: 1rem;">
+                            <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                            <strong>الدعم الفني:</strong> 
+                            <a href="https://wa.me/201229971386" target="_blank" style="color: var(--gold-primary);">
+                                تواصل معنا على واتساب
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="/assets/js/utils.js"></script>
+    
+    <script>
+        // State
+        let pendingBooking = null;
+        let selectedMethod = 'orange-cash';
+        
+        // Load pending booking from localStorage
+        function loadPendingBooking() {
+            try {
+                const stored = localStorage.getItem('pendingBooking');
+                if (stored) {
+                    pendingBooking = JSON.parse(stored);
+                    renderBookingSummary();
+                } else {
+                    // Try to get from session
+                    showNoBookingError();
+                }
+            } catch (error) {
+                console.error('Error loading booking:', error);
+                showNoBookingError();
+            }
+        }
+        
+        // Render booking summary
+        function renderBookingSummary() {
+            const container = document.getElementById('bookingSummaryContainer');
+            
+            if (!pendingBooking || !pendingBooking.customer) {
+                container.innerHTML = `
+                    <div class="error-container" style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc2626;"></i>
+                        <h3>لا توجد بيانات حجز</h3>
+                        <p>يرجى العودة إلى الصفحة الرئيسية وحجز رحلة أولاً.</p>
+                        <a href="/" class="btn btn-primary" style="margin-top: 1rem;">الذهاب إلى الرئيسية</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const isArabic = localStorage.getItem('language') !== 'en';
+            const currency = pendingBooking.pricing?.currency || 'EGP';
+            const currencySymbol = currency === 'EGP' ? 'جنيه' : '$';
+            
+            container.innerHTML = `
+                <div class="booking-summary">
+                    <h3><i class="fas fa-user"></i> بيانات المسافر</h3>
+                    <div class="summary-row">
+                        <span>الاسم الكامل:</span>
+                        <span>${escapeHtml(pendingBooking.customer.name)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>البريد الإلكتروني:</span>
+                        <span>${escapeHtml(pendingBooking.customer.email)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>رقم الهاتف:</span>
+                        <span>${escapeHtml(pendingBooking.customer.phone)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>الجنسية:</span>
+                        <span>${pendingBooking.customer.nationality === 'egyptian' ? '🇪🇬 مصري / عربي' : '🌍 أجنبي'}</span>
+                    </div>
+                </div>
+                
+                <div class="booking-summary">
+                    <h3><i class="fas fa-map-marked-alt"></i> تفاصيل الرحلة</h3>
+                    <div class="summary-row">
+                        <span>الرحلة:</span>
+                        <span>${escapeHtml(pendingBooking.tourName || 'رحلة سياحية')}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>عدد الأفراد:</span>
+                        <span>${pendingBooking.details?.persons || 1} شخص</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>تاريخ الرحلة:</span>
+                        <span>${pendingBooking.details?.date || '-'}</span>
+                    </div>
+                    ${pendingBooking.details?.message ? `
+                        <div class="summary-row">
+                            <span>ملاحظات:</span>
+                            <span>${escapeHtml(pendingBooking.details.message.substring(0, 100))}</span>
+                        </div>
+                    ` : ''}
+                </div>
+                
+                <div class="booking-summary">
+                    <h3><i class="fas fa-dollar-sign"></i> تفاصيل الدفع</h3>
+                    <div class="summary-row">
+                        <span>السعر للفرد:</span>
+                        <span>${(pendingBooking.pricing?.pricePerPerson || 0).toLocaleString()} ${currencySymbol}</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>الإجمالي المطلوب:</span>
+                        <span>${(pendingBooking.pricing?.totalAmount || 0).toLocaleString()} ${currencySymbol}</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Select payment method
+        function selectPaymentMethod(method) {
+            selectedMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`.payment-method[data-method="${method}"]`).classList.add('selected');
+            
+            // Update radio
+            const radio = document.querySelector(`.payment-method[data-method="${method}"] input`);
+            if (radio) radio.checked = true;
+            
+            // Show/hide details based on method
+            const orangeDetails = document.getElementById('orangeCashDetails');
+            if (method === 'orange-cash') {
+                if (orangeDetails) orangeDetails.style.display = 'block';
+            } else {
+                if (orangeDetails) orangeDetails.style.display = 'none';
+            }
+        }
+        
+        // Copy mobile number
+        function copyMobileNumber() {
+            const number = document.getElementById('mobileNumber').innerText.split(' ')[0];
+            navigator.clipboard.writeText(number);
+            utils.showToast('تم نسخ رقم المحفظة', 'success');
+        }
+        
+        // Generate reference number
+        function generateReferenceNumber() {
+            const timestamp = Date.now().toString().slice(-8);
+            const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            return `REF${timestamp}${random}`;
+        }
+        
+        // Process payment
+        async function processPayment() {
+            if (!pendingBooking || !pendingBooking.id) {
+                utils.showToast('لا توجد بيانات حجز. يرجى العودة إلى الصفحة الرئيسية.', 'error');
+                setTimeout(() => window.location.href = '/', 2000);
+                return;
+            }
+            
+            const transferNumber = document.getElementById('transferNumber')?.value.trim();
+            
+            if (!transferNumber) {
+                utils.showToast('الرجاء إدخال رقم التحويل المرجعي', 'error');
+                document.getElementById('transferNumber')?.focus();
+                return;
+            }
+            
+            if (transferNumber.length < 8) {
+                utils.showToast('رقم التحويل يجب أن يكون 8 أحرف على الأقل', 'error');
+                return;
+            }
+            
+            const confirmBtn = document.getElementById('confirmPaymentBtn');
+            const originalText = confirmBtn.innerHTML;
+            
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري تأكيد الدفع...';
+            
+            try {
+                const response = await fetch('/api/v1/bookings/confirm-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        bookingId: pendingBooking.id,
+                        transferNumber: transferNumber,
+                        paymentMethod: selectedMethod,
+                        amount: pendingBooking.pricing?.totalAmount,
+                        currency: pendingBooking.pricing?.currency
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Clear pending booking
+                    localStorage.removeItem('pendingBooking');
+                    
+                    // Show success message
+                    utils.showToast('✅ تم تأكيد الدفع بنجاح! سيصلك إيميل التأكيد قريباً.', 'success');
+                    
+                    // Redirect to home after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 3000);
+                } else {
+                    utils.showToast(data.error || '❌ فشل تأكيد الدفع. يرجى المحاولة مرة أخرى.', 'error');
+                    confirmBtn.disabled = false;
+                    confirmBtn.innerHTML = originalText;
+                }
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                utils.showToast('❌ حدث خطأ في الاتصال بالخادم', 'error');
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = originalText;
+            }
+        }
+        
+        // Show no booking error
+        function showNoBookingError() {
+            const container = document.getElementById('bookingSummaryContainer');
+            container.innerHTML = `
+                <div class="error-container" style="text-align: center; padding: 2rem;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc2626;"></i>
+                    <h3>لا توجد بيانات حجز</h3>
+                    <p>لم يتم العثور على طلب حجز. يرجى حجز رحلة أولاً من الصفحة الرئيسية.</p>
+                    <a href="/#tours" class="btn btn-primary" style="margin-top: 1rem;">
+                        <i class="fas fa-calendar-check"></i> احجز الآن
+                    </a>
+                </div>
+            `;
+            
+            // Disable payment button
+            const confirmBtn = document.getElementById('confirmPaymentBtn');
+            if (confirmBtn) {
+                confirmBtn.disabled = true;
+                confirmBtn.style.opacity = '0.5';
+                confirmBtn.title = 'لا توجد بيانات حجز';
+            }
+        }
+        
+        // Escape HTML
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+        
+        // Dark Mode
+        function initDarkMode() {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+            }
+            
+            // Add dark mode toggle button
+            const darkModeBtn = document.createElement('button');
+            darkModeBtn.className = 'icon-btn';
+            darkModeBtn.style.position = 'fixed';
+            darkModeBtn.style.bottom = '20px';
+            darkModeBtn.style.right = '20px';
+            darkModeBtn.style.zIndex = '1000';
+            darkModeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            darkModeBtn.onclick = () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkNow = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkNow);
+                darkModeBtn.innerHTML = isDarkNow ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            };
+            document.body.appendChild(darkModeBtn);
+        }
+        
+        // Prevent back navigation after payment
+        function preventBackNavigation() {
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.go(1);
+            };
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            preventBackNavigation();
+            loadPendingBooking();
+            
+            // Enter key handler
+            const transferInput = document.getElementById('transferNumber');
+            if (transferInput) {
+                transferInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        processPayment();
+                    }
+                });
+            }
+        });
+        
+        // Export functions
+        window.selectPaymentMethod = selectPaymentMethod;
+        window.copyMobileNumber = copyMobileNumber;
+        window.processPayment = processPayment;
+    </script>
+</body>
+</html>
